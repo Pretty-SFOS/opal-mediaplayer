@@ -1,0 +1,8 @@
+//@ This file is part of opal-mymodule.
+//@ https://github.com/Pretty-SFOS/opal-mymodule
+{% for copyright_line in copyright_lines %}
+//@ {{ copyright_line }}
+{% endfor %}
+{% for expression in spdx_expressions %}
+//@ SPDX-License-Identifier: {{ expression }}
+{% endfor %}

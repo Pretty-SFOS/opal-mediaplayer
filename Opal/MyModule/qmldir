@@ -1,0 +1,6 @@
+module Opal.MyModule
+# This file is part of Opal.MyModule.
+# SPDX-FileCopyrightText: 2023-2024 Mirian Margiani
+# SPDX-License-Identifier: GPL-3.0-or-later
+MyComponent 1.0 MyComponent.qml
+MyScript 1.0 MyScript.js

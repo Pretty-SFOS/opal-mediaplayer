@@ -1,0 +1,12 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: Opal.MyModule
+Upstream-Contact: Mirian Margiani <mixosaurus+ichthyo@pm.me>
+Source: https://github.com/Pretty-SFOS/opal-mymodule
+
+Files: translations/*
+Copyright: Opal.MyModule translations contributors
+License: GPL-3.0-or-later
+
+Files: doc/screenshot-*.webp
+Copyright: Screenshot Author
+License: CC-BY-SA-4.0
