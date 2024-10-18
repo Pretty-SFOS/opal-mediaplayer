@@ -11,45 +11,6 @@ import Nemo.KeepAlive 1.2
 import Amber.Mpris 1.0
 import "private"
 
-//// Whisperfish related issue (works in File Browser):
-//// Video playback is partly broken. Showing anything only works if
-//// autoPlay is true, but play/pause does not work even though the
-//// media player changes its playbackState property correctly.
-//// Looping is not possible. (This may be related to WF#158.)
-//Video {
-//    id: video
-//    anchors.fill: parent
-//    autoPlay: false // TODO(WF): set to false once possible
-//    fillMode: VideoOutput.PreserveAspectFit
-//    muted: false
-//    onStopped: play() // we have to restart manually because
-//                      // seamless looping is only available since Qt 5.13
-//    onErrorChanged: {
-//        if (error === MediaPlayer.NoError) return;
-//        // we don't want to risk crashes by trying any further
-//        console.log("playing video failed:", errorString)
-//        _errorString = errorString
-//        source = ""
-//        loader.sourceComponent = failedLoading
-//    }
-//}
-
-//Loader {
-//    id: loader
-//    anchors.fill: parent
-//    Component {
-//        id: failedLoading
-//        BusyLabel {
-//            //: Full page placeholder shown when a video failed to load
-//            //% "Failed to play"
-//            text: qsTr("Failed to play") +
-//                  "\n\n" + _errorString
-//            running: false
-//        }
-//    }
-//}
-
-
 Page {
     id: root
     allowedOrientations: Orientation.All
@@ -173,8 +134,9 @@ Page {
     onStreamUrlChanged: {
         console.log("NEW STREAM URL:", streamUrl)
 
-        if (errorDetail.visible && errorTxt.visible) { errorDetail.visible = false; errorTxt.visible = false }
-        videoPoster.showControls();
+        errorOverlay.reset()
+//        if (errorDetail.visible && errorTxt.visible) { errorDetail.visible = false; errorTxt.visible = false }
+        videoPoster.showControls()
 
         if (streamUrl.toString().match("^file://") || streamUrl.toString().match("^/")) {
             savePositionMsec = "Not Found" //DB.getPosition(streamUrl.toString());
@@ -299,77 +261,27 @@ Page {
         // }
 
         Rectangle {
-            color: isLightTheme ? "white" : "black"
-            opacity: 0.60
+            color: Theme.overlayBackgroundColor
             anchors.fill: parent
-            parent: flick
-            visible: errorBox.visible
-            z:98
+            opacity: errorOverlay.visible ? Theme.opacityOverlay : 0.0
+            z: 1000
+
             MouseArea {
                 anchors.fill: parent
+                enabled: errorOverlay.visible
             }
-        }
 
-        Column {
-            id: errorBox
-            anchors.top: parent.top
-            anchors.topMargin: 65
-            spacing: 15
-            width: parent.width
-            height: parent.height
-            parent: root
-            z:99
-            visible: !!errorTxt.text || !!errorDetail.text
-
-            Label {
-                // TODO: seems only show error number. Maybe disable in the future
-                id: errorTxt
-                text: ""
-
-                //            anchors.top: parent.top
-                //            anchors.topMargin: 65
-                font.bold: true
-                onTextChanged: {
-                    if (text !== "") visible = true;
+            ErrorOverlay {
+                id: errorOverlay
+                onVisibleChanged: {
+                    if (visible) videoPoster.hideControls()
                 }
-            }
-
-            TextArea {
-                id: errorDetail
-                text: ""
-                width: parent.width
-                height: parent.height / 2.5
-                anchors.horizontalCenter: parent.horizontalCenter
-                font.bold: false
-                onTextChanged: {
-                    if (text !== "") visible = true;
-                }
-                background: null
-                readOnly: true
-            }
-        }
-        Button {
-            text: qsTr("Dismiss")
-            onClicked: {
-                errorTxt.text = ""
-                errorDetail.text = ""
-                errorBox.visible = false
-                videoPoster.showControls();
-            }
-            visible: errorBox.visible
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: Theme.paddingLarge
-            parent: flick
-            z: {
-                if ((errorBox.z + 1) > (videoPoster.z + 1)) errorBox.z + 1
-                else videoPoster.z + 1
             }
         }
 
         Item {
             id: mediaItem
-            property bool active : true
+            property bool active: true
             visible: active
             parent: pincher.enabled ? pincher : flick
             anchors.fill: parent
@@ -656,32 +568,19 @@ Page {
                         mprisPlayer.title = metaData.title
                     }
                 }
+
                 onError: {
-                    // Just a little help
-                    //            MediaPlayer.NoError - there is no current error.
-                    //            MediaPlayer.ResourceError - the video cannot be played due to a problem allocating resources.
-                    //            MediaPlayer.FormatError - the video format is not supported.
-                    //            MediaPlayer.NetworkError - the video cannot be played due to network issues.
-                    //            MediaPlayer.AccessDenied - the video cannot be played due to insufficient permissions.
-                    //            MediaPlayer.ServiceMissing - the video cannot be played because the media service could not be instantiated.
-                    if (error == MediaPlayer.ResourceError) errorTxt.text = "Ressource Error";
-                    else if (error == MediaPlayer.FormatError) errorTxt.text = "Format Error";
-                    else if (error == MediaPlayer.NetworkError) errorTxt.text = "Network Error";
-                    else if (error == MediaPlayer.AccessDenied) errorTxt.text = "Access Denied Error";
-                    else if (error == MediaPlayer.ServiceMissing) errorTxt.text = "Media Service Missing Error";
-                    //errorTxt.text = error;
-                    // Prepare user friendly advise on error
-                    errorDetail.text = errorString;
-                    if (error == MediaPlayer.ResourceError) errorDetail.text += qsTr("\nThe video cannot be played due to a problem allocating resources.\n\
-                        On Youtube Videos please make sure to be logged in. Some videos might be geoblocked or require you to be logged into youtube.")
-                    else if (error == MediaPlayer.FormatError) errorDetail.text += qsTr("\nThe audio and or video format is not supported.")
-                    else if (error == MediaPlayer.NetworkError) errorDetail.text += qsTr("\nThe video cannot be played due to network issues.")
-                    else if (error == MediaPlayer.AccessDenied) errorDetail.text += qsTr("\nThe video cannot be played due to insufficient permissions.")
-                    else if (error == MediaPlayer.ServiceMissing) errorDetail.text += qsTr("\nThe video cannot be played because the media service could not be instantiated.")
-                    errorBox.visible = true;
-                    /* Avoid MediaPlayer undefined behavior */
-                    stop();
+                    if (error === MediaPlayer.NoError) {
+                        return
+                    }
+
+                    // we don't want to risk crashes by trying any further
+                    console.error("[Opal.MediaPlayer] video playback failed:", error, errorString)
+                    stop()
+
+                    errorOverlay.show(error, errorString)
                 }
+
                 onStopped: {
                     if (isRepeat) {
                         play();
