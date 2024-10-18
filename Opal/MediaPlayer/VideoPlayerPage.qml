@@ -485,16 +485,25 @@ Page {
                 //     mprisPlayer.title = streamTitle
                 // }
 
+                readonly property int _centerControlHalf: 0.5 * (
+                    Theme.iconSizeMedium + 2 * 1.5 * Theme.paddingLarge)
+                readonly property int _outerControlSize:
+                    Theme.iconSizeMedium + 2 * 0.8 * Theme.paddingLarge
+                readonly property int _controlPadding:
+                    Theme.paddingLarge
+                readonly property int _outerControlThreshold:
+                    _centerControlHalf + _controlPadding + _outerControlSize
+
                 function isPlayPauseClick(mouse) {
                     var middleX = width / 2
                     var middleY = height / 2
 
                     return (
-                        (mouse.x >= middleX - Theme.iconSizeMedium &&
-                         mouse.x <= middleX + Theme.iconSizeMedium)
+                        (mouse.x >= middleX - _centerControlHalf &&
+                         mouse.x <= middleX + _centerControlHalf)
                     &&
-                        (mouse.y >= middleY - Theme.iconSizeMedium &&
-                         mouse.y <= middleY + Theme.iconSizeMedium)
+                        (mouse.y >= middleY - _centerControlHalf &&
+                         mouse.y <= middleY + _centerControlHalf)
                     )
                 }
 
@@ -502,12 +511,13 @@ Page {
                     var middleX = width / 2
                     var middleY = height / 2
 
+
                     return (
-                        (mouse.x > middleX + Theme.iconSizeMedium
-                                          + Theme.paddingMedium)
+                        (mouse.x > middleX + _centerControlHalf &&
+                         mouse.x < middleX + _outerControlThreshold)
                     &&
-                        (mouse.y >= middleY - Theme.iconSizeMedium &&
-                         mouse.y <= middleY + Theme.iconSizeMedium)
+                        (mouse.y >= middleY - _centerControlHalf &&
+                         mouse.y <= middleY + _centerControlHalf)
                     )
                 }
 
@@ -516,11 +526,11 @@ Page {
                     var middleY = height / 2
 
                     return (
-                        (mouse.x < middleX - Theme.iconSizeMedium
-                                          - Theme.paddingMedium)
+                        (mouse.x < middleX - _centerControlHalf &&
+                         mouse.x > middleX - _outerControlThreshold)
                     &&
-                        (mouse.y >= middleY - Theme.iconSizeMedium &&
-                         mouse.y <= middleY + Theme.iconSizeMedium)
+                        (mouse.y >= middleY - _centerControlHalf &&
+                         mouse.y <= middleY + _centerControlHalf)
                     )
 
                 }
