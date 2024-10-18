@@ -28,9 +28,11 @@ MprisPlayer {
     onTitleChanged: {
         if (title != "") {
             console.debug("Title changed to: " + title)
-            var metadata = mprisPlayer.metadata
-            metadata[Mpris.metadataToString(Mpris.Title)] = title
-            mprisPlayer.metadata = metadata
+            mprisPlayer.metaData.title = title
+
+//            var metadata = mprisPlayer.metadata
+//            metadata[Mpris.metadataToString(Mpris.Title)] = title
+//            mprisPlayer.metadata = metadata
         }
     }
 
@@ -54,7 +56,7 @@ MprisPlayer {
         // mprisPlayer.canGoPrevious = mainWindow.modelPlaylist.isPrev() && mainWindow.firstPage.isPlaylist
     }
 
-    loopStatus: Mpris.None
+    loopStatus: Mpris.LoopNone
     shuffle: false
     volume: 1
 }
