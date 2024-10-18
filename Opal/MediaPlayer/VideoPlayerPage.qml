@@ -4,32 +4,454 @@
 //@ SPDX-FileCopyrightText: 2013-2020 Leszek Lesner
 //@ SPDX-License-Identifier: GPL-3.0-or-later
 
-import QtQuick 2.0
+import QtQuick 2.6
 import Sailfish.Silica 1.0
-import QtMultimedia 5.0
-import Sailfish.Media 1.0
-//import "helper"
-//import "/usr/share/harbour-videoPlayer/qml/pages/helper" as Helper
-//import "../../../harbour-videoPlayer/qml/pages/helper"
-// import "../../../../../../../../usr/share/harbour-videoPlayer/qml/pages/helper" as Helper
-import "private" as Private
-
-// import "fileman"
-import org.nemomobile.mpris 1.0
+import QtMultimedia 5.6
 import Nemo.KeepAlive 1.2
+import Amber.Mpris 1.0
+import "private"
+
+//// Whisperfish related issue (works in File Browser):
+//// Video playback is partly broken. Showing anything only works if
+//// autoPlay is true, but play/pause does not work even though the
+//// media player changes its playbackState property correctly.
+//// Looping is not possible. (This may be related to WF#158.)
+//Video {
+//    id: video
+//    anchors.fill: parent
+//    autoPlay: false // TODO(WF): set to false once possible
+//    fillMode: VideoOutput.PreserveAspectFit
+//    muted: false
+//    onStopped: play() // we have to restart manually because
+//                      // seamless looping is only available since Qt 5.13
+//    onErrorChanged: {
+//        if (error === MediaPlayer.NoError) return;
+//        // we don't want to risk crashes by trying any further
+//        console.log("playing video failed:", errorString)
+//        _errorString = errorString
+//        source = ""
+//        loader.sourceComponent = failedLoading
+//    }
+//}
+
+//Loader {
+//    id: loader
+//    anchors.fill: parent
+//    Component {
+//        id: failedLoading
+//        BusyLabel {
+//            //: Full page placeholder shown when a video failed to load
+//            //% "Failed to play"
+//            text: qsTr("Failed to play") +
+//                  "\n\n" + _errorString
+//            running: false
+//        }
+//    }
+//}
+
 
 Page {
-    id: videoPlayerPage
-    objectName: "videoPlayerPage"
+    id: root
     allowedOrientations: Orientation.All
+
+    property string path
+    property alias title: titleOverlayItem.title
+    property bool autoplay: false
+    property bool continueInBackground: false
+    property bool enableDarkBackground: true
+
+    readonly property alias _titleOverlay: titleOverlayItem
+    readonly property bool _isPlaying: mediaPlayer.playbackState == MediaPlayer.PlayingState
+    property string _errorString
+
+    function play() {
+        videoPoster.play()
+    }
+
+    function pause() {
+        videoPoster.pause()
+    }
+
+    function togglePlay() {
+        if (_isPlaying) pause()
+        else play()
+    }
 
     onOrientationChanged: video.checkScaleStatus()
     onHeightChanged: video.checkScaleStatus()
     onWidthChanged: video.checkScaleStatus()
 
-    focus: true
+    onStatusChanged: {
+        if (!continueInBackground && status === PageStatus.Deactivating) {
+            pause()
+        } else if (autoplay && status === PageStatus.Activating) {
+            play()
+        }
+    }
 
-    // property /*QtObject*/ var dataContainer: ({})
+    onAutoplayChanged: {
+        if (autoplay) play()
+    }
+
+    DisplayBlanking {
+        preventBlanking: mediaPlayer.playbackState == MediaPlayer.PlayingState
+    }
+
+    Loader {
+        z: -1000
+        sourceComponent: enableDarkBackground ? backgroundComponent : null
+        anchors.fill: parent
+
+        Component {
+            id: backgroundComponent
+
+            Rectangle {
+                visible: enableDarkBackground
+                color: Theme.colorScheme === Theme.LightOnDark ?
+                           Qt.darker(Theme.highlightDimmerColor, 4.0) :
+                           Qt.darker(Theme.highlightDimmerColor, 8.0)
+                opacity: 0.98
+            }
+        }
+    }
+
+//    MouseArea {
+//        id: mouseArea
+//        anchors.fill: parent
+//        onClicked: {
+//            console.log("CLICKED", _isPlaying)
+
+//            if (_isPlaying === true) {
+//                titleOverlayItem.show()
+//                pause()
+//            } else {
+//                titleOverlayItem.hide()
+//                play()
+//            }
+//        }
+//    }
+
+    MediaTitleOverlay {
+        id: titleOverlayItem
+        shown: !autoplay
+        title: videoPoster.player.metaData.title || ""
+
+        /*
+        Rectangle {
+            z: parent.z - 1000
+            anchors.fill: parent
+            color: Theme.rgba("bbbbbb", 0.5)
+        }
+        */
+
+//        MouseArea {
+//            anchors.fill: parent
+//            onClicked: {
+//                titleOverlayItem.hide()
+//            }
+//        }
+
+//        Item {
+//            id: controls
+//            anchors.fill: parent
+
+//            property int _clickCount: 0
+
+//            function forward(seconds) {
+//                // TODO
+//            }
+
+//            function rewind(seconds) {
+//                // TODO
+//            }
+
+//            Timer {
+//                id: multiClickTimer
+//                running: false
+//                interval: 1500
+//                onTriggered: stop()
+//                triggeredOnStart: false
+//            }
+
+//            CircleButton {
+//                anchors {
+//                    verticalCenter: playButton.verticalCenter
+//                    right: playButton.left
+//                    rightMargin: Theme.paddingLarge
+//                }
+//                icon.source: "private/images/icon-m-rewind.png"
+//                grow: 0.8 * Theme.paddingLarge
+
+//                onClicked: {
+//                    if (multiClickTimer.running) {
+//                        controls._clickCount += 1
+//                        /// forwardIndicator.visible = true
+//                        controls.forward(10*pressTime)
+//                    } else {
+//                        controls._clickCount = 1
+//                        multiClickTimer.start()
+//                        controls.forward(10)
+//                    }
+//                }
+//            }
+
+//            CircleButton {
+//                id: playButton
+//                anchors.centerIn: parent
+//                icon.source: _isPlaying ?
+//                    "private/images/icon-m-pause.png" :
+//                    "private/images/icon-m-play.png"
+//                grow: 1.5 * Theme.paddingLarge
+
+//                onClicked: {
+//                    togglePlay()
+//                }
+//            }
+
+//            CircleButton {
+//                anchors {
+//                    verticalCenter: playButton.verticalCenter
+//                    left: playButton.right
+//                    leftMargin: Theme.paddingLarge
+//                }
+//                icon.source: "private/images/icon-m-forward.png"
+//                grow: 0.8 * Theme.paddingLarge
+
+//                onClicked: {
+//                    if (multiClickTimer.running) {
+//                        controls._clickCount += 1
+//                        /// backwardIndicator.visible = true
+//                        controls.rewind(5*pressTime)
+//                    } else {
+//                        controls._clickCount = 1
+//                        multiClickTimer.start()
+//                        controls.rewind(5)
+//                    }
+//                }
+//            }
+//        }
+
+        /*
+            Rectangle {
+                anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
+                enabled: { if (controls.opacity == 1.0) return true; else return false; }
+                height: Theme.itemSizeMedium + (2 * Theme.paddingLarge)
+                //color: "black"
+                //opacity: 0.5
+                gradient: Gradient {
+                    GradientStop { position: 0.0; color: "transparent" }
+                    GradientStop { position: 1.0; color: isLightTheme ? "white" : "black" } //Theme.highlightColor} // Black seems to look and work better
+                }
+
+                BackgroundItem {
+                    id: aspectBtn
+                    anchors.right: parent.right
+                    anchors.rightMargin: Theme.paddingMedium
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: Theme.paddingMedium
+                    width: height
+                    height: Theme.iconSizeMedium
+                    visible: allowScaling
+                    onClicked: {
+                        toggleAspectRatio();
+                    }
+                    Image {
+                        source: "image://theme/icon-m-scale"
+                        anchors.fill: parent
+                    }
+                }
+                Label {
+                    id: maxTime
+                    anchors.right: {
+                        if (aspectBtn.visible) return aspectBtn.left
+    //                    else if (qualBtn.visible) return qualBtn.left
+                        else return parent.right
+                    }
+                    anchors.rightMargin: aspectBtn.visible ? Theme.paddingMedium : (2 * Theme.paddingLarge)
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: Theme.paddingLarge
+                    text: {
+                        if (positionSlider.maximumValue > 3599) return Format.formatDuration(positionSlider.maximumValue, Formatter.DurationLong)
+                        else return Format.formatDuration(positionSlider.maximumValue, Formatter.DurationShort)
+                    }
+                    visible: videoItem._loaded
+                }
+
+                BackgroundItem {
+                    id: repeatBtn
+                    anchors.left: parent.left
+                    anchors.leftMargin: Theme.paddingMedium
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: Theme.paddingMedium
+                    width: height
+                    height: Theme.iconSizeMedium
+                    onClicked: {
+                        isRepeat = !isRepeat
+                    }
+                    Image {
+                        source: isRepeat ? "image://theme/icon-m-repeat" : "image://theme/icon-m-forward"
+                        anchors.fill: parent
+                    }
+                }
+
+                BackgroundItem {
+                    id: castBtn
+                    anchors.left: repeatBtn.right
+                    anchors.leftMargin: Theme.paddingMedium
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: Theme.paddingMedium
+                    width: height
+                    visible: jupii.found
+                    height: Theme.iconSizeMedium
+                    onClicked: {
+                        jupii.addUrlOnceAndPlay(streamUrl.toString(), streamTitle, "", (onlyMusic.visible ? 1 : 2), "llsvplayer", "/usr/share/icons/hicolor/172x172/apps/harbour-videoPlayer.png")
+                    }
+                    Image {
+    //                    source: "../images/icon-m-cast.png"
+                        source: "images/icon-m-cast.png"
+                        anchors.fill: parent
+                        ColorOverlay {
+                            anchors.fill: parent
+                            source: parent
+                            color: "black"
+                            visible: isLightTheme
+                        }
+                    }
+                }
+
+                Slider {
+                    id: positionSlider
+
+                    anchors {
+                        left: castBtn.visible ? castBtn.right : repeatBtn.right
+                        right: {
+                            if (maxTime.visible) maxTime.left
+    //                        else if (qualBtn.visible) qualBtn.left
+                            else parent.right;
+                        }
+                        bottom: parent.bottom
+                    }
+                    anchors.bottomMargin: Theme.paddingLarge + Theme.paddingMedium
+                    enabled: { if (controls.opacity == 1.0) return true; else return false; }
+                    height: Theme.itemSizeMedium
+                    width: {
+                        var slidWidth = parent.width
+    //                    if (qualBtn.visible) slidWidth =- qualBtn.width
+                        if (maxTime.visible) slidWidth =- maxTime.width
+                        if (aspectBtn.visible) slidWidth =- aspectBtn.width
+                        return slidWidth
+                    }
+                    handleVisible: down ? true : false
+                    minimumValue: 0
+
+                    valueText: {
+                        if (value > 3599) return Format.formatDuration(value, Formatter.DurationLong)
+                        else return Format.formatDuration(value, Formatter.DurationShort)
+                    }
+                    onReleased: {
+                        if (videoItem.active) {
+                            videoItem.player.source = videoItem.source
+                            videoItem.player.seek(value * 1000)
+                            //videoItem.player.pause()
+                        }
+                    }
+                    onDownChanged: {
+                        if (down) {
+                            coverTime.visible = true
+                        }
+                        else
+                            coverTime.fadeOut.start()
+                    }
+                }
+            } // Bottom rect End
+            Row {
+                id: backwardIndicator
+                anchors.horizontalCenter: parent.horizontalCenter
+                y: parent.width / 2 - (playPauseImg.height + Theme.paddingLarge)
+                visible: false
+                spacing: -Theme.paddingLarge*2
+
+                Image {
+                    id: prev1
+                    width: Theme.itemSizeLarge
+                    height: Theme.itemSizeLarge
+                    anchors.verticalCenter: parent.verticalCenter
+                    fillMode: Image.PreserveAspectFit
+                    source: "image://theme/icon-cover-play"
+
+                    transform: Rotation{
+                        angle: 180
+                        origin.x: prev1.width/2
+                        origin.y: prev1.height/2
+                    }
+                }
+                Image {
+                    id: prev2
+                    width: Theme.itemSizeLarge
+                    height: Theme.itemSizeLarge
+                    anchors.verticalCenter: parent.verticalCenter
+                    fillMode: Image.PreserveAspectFit
+                    source: "image://theme/icon-cover-play"
+
+                    transform: Rotation{
+                        angle: 180
+                        origin.x: prev2.width/2
+                        origin.y: prev2.height/2
+                    }
+                }
+
+                Timer {
+                    id: hideBackward
+                    interval: 300
+                    onTriggered: backwardIndicator.visible = false
+                }
+
+                onVisibleChanged: if (backwardIndicator.visible) hideBackward.start()
+            }
+
+            Row {
+                id: forwardIndicator
+                anchors.horizontalCenter: parent.horizontalCenter
+                y: parent.width / 2 - (playPauseImg.height + Theme.paddingLarge)
+                visible: false
+                spacing: -Theme.paddingLarge*2
+
+                Image {
+                    width: Theme.itemSizeLarge
+                    height: Theme.itemSizeLarge
+                    anchors.verticalCenter: parent.verticalCenter
+                    fillMode: Image.PreserveAspectFit
+                    source: "image://theme/icon-cover-play"
+
+                }
+                Image {
+                    width: Theme.itemSizeLarge
+                    height: Theme.itemSizeLarge
+                    anchors.verticalCenter: parent.verticalCenter
+                    fillMode: Image.PreserveAspectFit
+                    source: "image://theme/icon-cover-play"
+                }
+
+                Timer {
+                    id: hideForward
+                    interval: 300
+                    onTriggered: forwardIndicator.visible = false
+                }
+
+                onVisibleChanged: if (forwardIndicator.visible) hideForward.start()
+            }
+        } */
+    }
+
+
+
+    // -------------------------------------
+
+
+
+    property string streamUrl: path
+    property string streamTitle: title
+
 
     property string videoDuration: {
         if (videoPoster.duration > 3599) return Format.formatDuration(videoPoster.duration, Formatter.DurationLong)
@@ -39,42 +461,23 @@ Page {
         if (videoPoster.position > 3599) return Format.formatDuration(videoPoster.position, Formatter.DurationLong)
         else return Format.formatDuration(videoPoster.position, Formatter.DurationShort)
     }
-    // property string originalUrl: dataContainer.originalUrl
-    property string streamUrl: "/run/media/nemo/SD-Karte/Videos/FESTPLATTE/Serien/3rd/Hinterm Mond gleich links - S06E16 - Friede, Freude, Langeweile.mp4" // dataContainer.streamUrl // REQUIRED
-    // property bool youtubeDirect: dataContainer.youtubeDirect
-    // property bool isYtUrl: dataContainer.isYtUrl
-    property string streamTitle // dataContainer.streamTitle  // REQUIRED
-    property string title: videoPoster.player.metaData.title ? videoPoster.player.metaData.title : ""
-    property string artist: videoPoster.player.metaData.albumArtist ? videoPoster.player.metaData.albumArtist : ""
+
     property int subtitlesSize: Theme.fontSizeMedium // dataContainer.subtitlesSize
     property bool boldSubtitles: true // dataContainer.boldSubtitles
     property string subtitlesColor: "white" // dataContainer.subtitlesColor
     property bool enableSubtitles: false // dataContainer.enableSubtitles // REQUIRED
     property variant currentVideoSub: []
-    // property string url720p: dataContainer.url720p
-    // property string url480p: dataContainer.url480p
-    // property string url360p: dataContainer.url360p
-    // property string url240p: dataContainer.url240p
-    // property string ytQual: dataContainer.ytQual
-    // property string ytQualWanted: dataContainer.ytQualWanted
-    // property string ytdlQual: dataContainer.ytdlQual
-    // property bool liveView: true
     property Page dPage
-    property bool autoplay: false // REQUIRED //dataContainer.autoplay // REQUIRED
     property bool savedPosition: false
     property string savePositionMsec
     property string subtitleUrl
     property bool subtitleSolid: true // dataContainer.subtitleSolid
     // property bool isPlaylist: dataContainer.isPlaylist
     property bool isNewSource: false
-    // property bool isDash: dataContainer.isDash
     // property string onlyMusicState: dataContainer.onlyMusicState
-    // property bool isLiveStream: dataContainer.isLiveStream
     property bool allowScaling: false
     property bool isRepeat: false
 
-    // property alias showTimeAndTitle: showTimeAndTitle
-    // property alias pulley: pulley
     // property alias onlyMusic: onlyMusic
     property alias videoPoster: videoPoster
 
@@ -83,65 +486,13 @@ Page {
 
 
     Component.onCompleted: {
-        // if (minPlayerLoader.status == Loader.Ready) {
-        //     minPlayerLoader.item.hide();
-        //     minPlayer.pause();
-        // }
         if (autoplay) {
             //console.debug("[videoPlayer.qml] Autoplay activated for url: " + videoPoster.source);
             videoPoster.play();
-            // TODO: Workaround somehow toggleControls() has a racing condition with something else
-            // pulley.visible = false;
             showNavigationIndicator = false;
             mprisPlayer.title = streamTitle;
-            // minPlayerLoader.active = false;
         }
-
         console.log("PLAYING", streamUrl, "AUTO", autoplay)
-    }
-
-    Component.onDestruction: {
-        console.debug("Destruction of videoplayer")
-        var sourcePath = mediaPlayer.source.toString();
-        if (sourcePath.match("^file://")) {
-            //console.debug("[videoPlayer.qml] Destruction going on so write : " + mediaPlayer.source + " with timecode: " + mediaPlayer.position + " to db")
-            DB.addPosition(sourcePath,mediaPlayer.position);
-        }
-        // if (mainWindow.firstPage.showMinPlayer) {
-        //     minPlayer.source = mediaPlayer.source
-        //     minPlayer.seek(mediaPlayer.position)
-        //     minPlayer.streamTitle = streamTitle
-        //     minPlayer.isPlaylist = isPlaylist
-        //     if (mediaPlayer.playbackState === MediaPlayer.PlayingState) minPlayer.play();
-        //     mediaPlayer.pause();
-        //     mprisPlayer.hide();
-        //     minPlayerLoader.active = true;
-        //     minPlayerLoader.sourceComponent = minPlayerComponent
-        //     minPlayerLoader.item.show()
-        // }
-//        mediaPlayer.stop();
-//        mediaPlayer.source = "";
-//        mediaPlayer.play();
-//        mediaPlayer.stop();
-//        gc();
-//        video.destroy();
-//        pageStack.popAttached();
-    }
-
-//    onStatusChanged: {
-//        if (status == PageStatus.Deactivating) {
-//            //console.debug("VidePlayer page deactivated");
-//            mediaPlayer.stop();
-//            video.destroy();
-//        }
-//    }
-
-    onAutoplayChanged: {
-        console.log("NEW AUTOPLAY:", autoplay)
-
-        if (autoplay) {
-            videoPoster.play()
-        }
     }
 
     onStreamUrlChanged: {
@@ -149,101 +500,17 @@ Page {
 
         if (errorDetail.visible && errorTxt.visible) { errorDetail.visible = false; errorTxt.visible = false }
         videoPoster.showControls();
-//        dataContainer.streamTitle = ""  // Reset Stream Title here
-//        dataContainer.ytQual = ""
-        // if (YT.checkYoutube(streamUrl)=== true) {
-        //     //console.debug("[videoPlayer.qml] Youtube Link detected loading Streaming URLs")
-        //     // Reset Stream urls
-        //     dataContainer.url240p = ""
-        //     dataContainer.url360p = ""
-        //     dataContainer.url480p = ""
-        //     dataContainer.url720p = ""
-        //     YT.getYoutubeTitle(streamUrl);
-        //     var ytID = YT.getYtID(streamUrl);
-        //     YT.getYoutubeStream(ytID);
-        //     dataContainer.isYtUrl = true;
-        // }
-        // else if (YT.checkYoutube(originalUrl) === true) {
-        //     //console.debug("[videoPlayer.qml] Loading Youtube Title from original URL")
-        //     YT.getYoutubeTitle(originalUrl);
-        // }
-        // else dataContainer.isYtUrl = false;
-        //if (dataContainer.streamTitle === "") dataContainer.streamTitle = mainWindow.findBaseName(streamUrl)
-        // dataContainer.ytdlStream = false
 
         if (streamUrl.toString().match("^file://") || streamUrl.toString().match("^/")) {
             savePositionMsec = "Not Found" //DB.getPosition(streamUrl.toString());
             console.debug("[videoPlayer.qml] streamUrl= " + streamUrl + " savePositionMsec= " + savePositionMsec + " streamUrl.length = " + streamUrl.length);
             if (savePositionMsec !== "Not Found") savedPosition = true;
             else savedPosition = false;
-            // dataContainer.streamTitle = mainWindow.findBaseName(streamUrl)
         }
         // if (isPlaylist) mainWindow.curPlaylistIndex = mainWindow.modelPlaylist.getPosition(streamUrl)
         isNewSource = true
     }
 
-    // onStreamTitleChanged: {
-    //     if (streamTitle != "" && streamTitle != streamUrl && !mainWindow.firstPage.historyModel.containsTitle(streamTitle) && !mainWindow.firstPage.historyModel.containsUrl(streamUrl)) {
-    //         //Write into history database
-    //         DB.addHistory(streamUrl,streamTitle);
-    //         // Don't forgt to write it to the List aswell
-    //         mainWindow.firstPage.add2History(streamUrl,streamTitle);
-    //         mprisPlayer.title = streamTitle
-    //     }
-    // }
-
-    Rectangle {
-        id: headerBg
-        width:/*url*/titleHeader.width
-        height: /*url*/titleHeader.height + Theme.paddingMedium
-        visible: {
-            if (/*urlHeader.visible || */titleHeader.visible) return true
-            else return false
-        }
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: isLightTheme ? "white" : "black" }
-            GradientStop { position: 1.0; color: "transparent" } //Theme.highlightColor} // Black seems to look and work better
-        }
-    }
-
-    // PageHeader {
-    //     id: urlHeader
-    //     title: mainWindow.findBaseName(streamUrl)
-    //     _titleItem.color: isLightTheme? "black" : "white"
-    //     visible: {
-    //         if (titleHeader.visible == false && pulley.visible && mainWindow.applicationActive) return true
-    //         else return false
-    //     }
-    //     _titleItem.font.pixelSize: mainWindow.applicationActive ? Theme.fontSizeMedium : Theme.fontSizeHuge
-    //     states: [
-    //         State {
-    //             name: "cover"
-    //             PropertyChanges {
-    //                 target: urlHeader
-    //                 visible: true
-    //             }
-    //         }
-    //     ]
-    // }
-    PageHeader {
-        id: titleHeader
-        _titleItem.color: isLightTheme? "black" : "white"
-        title: streamTitle
-        visible: {
-            if (streamTitle != "" /*&& pulley.visible && mainWindow.applicationActive*/) return true
-            else return false
-        }
-        _titleItem.font.pixelSize: /*mainWindow.applicationActive ?*/ Theme.fontSizeMedium /*: Theme.fontSizeHuge*/
-        // states: [
-        //     State {
-        //         name: "cover"
-        //         PropertyChanges {
-        //             target: titleHeader
-        //             visible: true
-        //         }
-        //     }
-        // ]
-    }
     function videoPauseTrigger() {
         // this seems not to work somehow
         if (videoPoster.player.playbackState == MediaPlayer.PlayingState) videoPoster.pause();
@@ -264,91 +531,12 @@ Page {
         id: flick
         anchors.fill: parent
 
-
-        // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
         // PullDownMenu {
         //     id: pulley
         //
         //     MenuItem {
         //         text: qsTr("Properties")
         //         onClicked: mediaPlayer.loadMetaDataPage("")
-        //     }
-        //
-        //     MenuItem {
-        //         id: ytdlMenuItem
-        //         text: qsTr("Load with ytdl")
-        //         visible: {
-        //             if ((/^http:\/\/ytapi.com/).test(mainWindow.firstPage.streamUrl)) return true
-        //             else if (mainWindow.firstPage.isYtUrl) return true
-        //             else return false
-        //         }
-        //         //onClicked: pageStack.push(Qt.resolvedUrl("DownloadManager.qml"), {"downloadUrl": streamUrl, "downloadName": streamTitle});
-        //         // Alternatively use direct youtube url instead of ytapi for downloads (ytapi links not always download with download manager)
-        //         onClicked: {
-        //             var youtubeID = YT.getYtID(originalUrl.toString())
-        //             if (youtubeID !== "") {
-        //                 _ytdl.setUrl(youtubeID)
-        //                 _ytdl.setParameter("-f " + ytdlQual)
-        //                 _ytdl.getStreamUrl()
-        //                 _ytdl.getStreamTitle()
-        //                 mainWindow.firstPage.isYtUrl = false
-        //                 mainWindow.firstPage.busy.visible = true;
-        //                 mainWindow.firstPage.busy.running = true;
-        //                 pageStack.pop()
-        //             }
-        //         }
-        //     }
-        //     MenuItem {
-        //         id: ytMenuItem
-        //         text: qsTr("Download Youtube Video")
-        //         visible: {
-        //             if ((/^http:\/\/ytapi.com/).test(mainWindow.firstPage.streamUrl)) return true
-        //             else if (mainWindow.firstPage.isYtUrl) return true
-        //             else return false
-        //         }
-        //         //onClicked: pageStack.push(Qt.resolvedUrl("DownloadManager.qml"), {"downloadUrl": streamUrl, "downloadName": streamTitle});
-        //         // Alternatively use direct youtube url instead of ytapi for downloads (ytapi links not always download with download manager)
-        //         onClicked: {
-        //             // Filter out all chars that might stop the download manager from downloading the file
-        //             // Illegal chars: `~!@#$%^&*()-=+\|/?.>,<;:'"[{]}
-        //             //console.debug("[FileDetails -> Download YT Video]: " + mainWindow.firstPage.youtubeDirectUrl)
-        //             mainWindow.firstPage.streamTitle = YT.getDownloadableTitleString(mainWindow.firstPage.streamTitle)
-        //             var youtubeID = YT.getYtID(originalUrl.toString())
-        //             _ytdl.setUrl(youtubeID);
-        //             pageStack.push(Qt.resolvedUrl("ytQualityChooser.qml"), {"streamTitle": mainWindow.firstPage.streamTitle, "url720p": url720p, "url480p": url480p, "url360p": url360p, "url240p": url240p, "ytDownload": true});
-        //         }
-        //     }
-        //     MenuItem {
-        //         text: qsTr("Download")
-        //         visible: {
-        //             if ((/^https?:\/\/.*$/).test(mainWindow.firstPage.streamUrl) && ytMenuItem.visible == false) return true
-        //             else return false
-        //         }
-        //         //onClicked: pageStack.push(Qt.resolvedUrl("DownloadManager.qml"), {"downloadUrl": streamUrl, "downloadName": streamTitle});
-        //         // Alternatively use direct youtube url instead of ytapi for downloads (ytapi links not always download with download manager)
-        //         onClicked: {
-        //             // Filter out all chars that might stop the download manager from downloading the file
-        //             // Illegal chars: `~!@#$%^&*()-=+\|/?.>,<;:'"[{]}
-        //             //console.debug("[FileDetails -> Download YT Video]: " + mainWindow.firstPage.youtubeDirectUrl)
-        //             mainWindow.firstPage.streamTitle = YT.getDownloadableTitleString(mainWindow.firstPage.streamTitle)
-        //             pageStack.push(Qt.resolvedUrl("DownloadManager.qml"), {"downloadName": mainWindow.firstPage.streamTitle, "downloadUrl": mainWindow.firstPage.streamUrl});
-        //         }
-        //     }
-        //     MenuItem {
-        //         text: qsTr("Add to bookmarks")
-        //         visible: {
-        //             if (mainWindow.firstPage.streamTitle !== "" || mainWindow.firstPage.streamUrl !== "") return true
-        //             else return false
-        //         }
-        //         onClicked: {
-        //             if (isYtUrl) {
-        //                 if (mainWindow.firstPage.streamTitle != "") mainWindow.modelBookmarks.addBookmark(mainWindow.firstPage.originalUrl,mainWindow.firstPage.streamTitle,mainWindow.firstPage.isLiveStream)
-        //                 else mainWindow.modelBookmarks.addBookmark(mainWindow.firstPage.originalUrl,mainWindow.findBaseName(mainWindow.firstPage.originalUrl), mainWindow.firstPage.isLiveStream)
-        //             } else {
-        //                 if (mainWindow.firstPage.streamTitle != "") mainWindow.modelBookmarks.addBookmark(mainWindow.firstPage.streamUrl,mainWindow.firstPage.streamTitle,mainWindow.firstPage.isLiveStream)
-        //                 else mainWindow.modelBookmarks.addBookmark(mainWindow.firstPage.streamUrl,mainWindow.findBaseName(mainWindow.firstPage.streamUrl),mainWindow.firstPage.isLiveStream)
-        //             }
-        //         }
         //     }
         //     // MenuItem {
         //     //     text: qsTr("Load Subtitle")
@@ -404,7 +592,7 @@ Page {
         //                 source: Qt.resolvedUrl("images/audio-mc-anim.gif")
         //                 width: Screen.height / 1.25
         //                 height: Screen.width - Theme.paddingMedium
-        //                 rotation: 90 -videoPlayerPage.rotation
+        //                 rotation: 90 -root.rotation
         //                 playing: videoPoster.playing
         //             }
         //         },
@@ -415,7 +603,7 @@ Page {
         //                 source: Qt.resolvedUrl("images/audio-eq-anim.gif")
         //                 width: Screen.height / 1.25
         //                 height: Screen.width / 0.8
-        //                 rotation: 90 -videoPlayerPage.rotation
+        //                 rotation: 90 -root.rotation
         //                 playing: videoPoster.playing
         //             }
         //         }
@@ -447,9 +635,9 @@ Page {
 
         Component {
             id: subItem
-            Private.SubtitlesItem {
+            SubtitlesItem {
                 id: subtitlesText
-                anchors { fill: parent; margins: videoPlayerPage.inPortrait ? 10 : 50 }
+                anchors { fill: parent; margins: root.inPortrait ? 10 : 50 }
                 wrapMode: Text.WordWrap
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignBottom
@@ -476,10 +664,7 @@ Page {
             opacity: 0.60
             anchors.fill: parent
             parent: flick
-            visible: {
-                if (errorBox.visible) return true;
-                else return false;
-            }
+            visible: errorBox.visible
             z:98
             MouseArea {
                 anchors.fill: parent
@@ -493,12 +678,10 @@ Page {
             spacing: 15
             width: parent.width
             height: parent.height
-            parent: videoPlayerPage
+            parent: root
             z:99
-            visible: {
-                if (errorTxt.text !== "" || errorDetail.text !== "" ) return true;
-                else return false;
-            }
+            visible: !!errorTxt.text || !!errorDetail.text
+
             Label {
                 // TODO: seems only show error number. Maybe disable in the future
                 id: errorTxt
@@ -511,7 +694,6 @@ Page {
                     if (text !== "") visible = true;
                 }
             }
-
 
             TextArea {
                 id: errorDetail
@@ -553,17 +735,11 @@ Page {
             parent: pincher.enabled ? pincher : flick
             anchors.fill: parent
 
-            Private.VideoPoster {
+            VideoPoster {
                 id: videoPoster
-                width: videoPlayerPage.orientation === Orientation.Portrait ? Screen.width : Screen.height
-                height: videoPlayerPage.height
-
-                // +++
-                property QtObject firstPage: QtObject {
-                    property string ytQual: ""
-                }
-
+                anchors.fill: parent
                 player: mediaPlayer
+                autoplay: root.autoplay
 
                 property int mouseX
                 property int mouseY
@@ -576,9 +752,6 @@ Page {
                     player.seek(0);
                     //console.debug("Source changed to " + source)
                 }
-                //source: "file:///home/nemo/Videos/eva.mp4"
-                //source: "http://netrunnerlinux.com/vids/default-panel-script.mkv"
-                //source: "http://www.ytapi.com/?vid=lfAixpkzcBQ&format=direct"
 
                 function play() {
                     playClicked();
@@ -610,27 +783,28 @@ Page {
                 // }
 
                 function toggleControls() {
-                    //console.debug("Controls Opacity:" + controls.opacity);
+                    // console.debug("Controls Opacity:" + controls.opacity);
                     if (controls.opacity === 0.0) {
                         //console.debug("Show controls");
                         showControls()
-                    }
-                    else {
+                    } else {
                         //console.debug("Hide controls");
                         hideControls()
                     }
                 }
 
                 function hideControls() {
+                    titleOverlayItem.hide()
                     controls.opacity = 0.0
                     // pulley.visible = false
-                    videoPlayerPage.showNavigationIndicator = false
+                    root.showNavigationIndicator = false
                 }
 
                 function showControls() {
+                    titleOverlayItem.show()
                     controls.opacity = 1.0
                     // pulley.visible = true
-                    videoPlayerPage.showNavigationIndicator = true
+                    root.showNavigationIndicator = true
                 }
 
                 function pause() {
@@ -674,75 +848,59 @@ Page {
                 //     mprisPlayer.title = streamTitle
                 // }
 
-                function singleClick(mouse) {
-                    if (mediaPlayer.playbackState == MediaPlayer.PlayingState) {
-                        //console.debug("Mouse values:" + mouse.x + " x " + mouse.y)
-                        var middleX = width / 2
-                        var middleY = height / 2
-                        //console.debug("MiddleX:" + middleX + " MiddleY:"+middleY + " mouse.x:"+mouse.x + " mouse.y:"+mouse.y)
-                        if ((mouseX >= middleX - Theme.iconSizeMedium && mouseX <= middleX + Theme.iconSizeMedium) && (mouseY >= middleY - Theme.iconSizeMedium && mouseY <= middleY + Theme.iconSizeMedium)) {
-                            pause();
-                        }
-                        else {
-                            toggleControls();
-                        }
-                    } else {
-                        //mediaPlayer.play()
-                        //console.debug("clicked something else")
-                        toggleControls();
-                    }
-                }
-
-                function dblClick() {
+                function isPlayPauseClick(mouse) {
                     var middleX = width / 2
-                    if (mouseX > middleX + Theme.iconSizeMedium + Theme.paddingMedium) {
-                        if (source.toString().length !== 0) {
-                            //console.debug("Yeah we have a video source")
-                            if (!_pressTimer.running) {
-                                pressTime = 1;
-                                _pressTimer.start();
-                                ffwd(10)
-                            }
-                            else {
-                                pressTime += 1
-                                ffwd(10*pressTime)
-                            }
-                        }
-                    }
-                    else if (mouseX < middleX - Theme.iconSizeMedium - Theme.paddingMedium) {
-                        if (source.toString().length !== 0) {
-                            //console.debug("Yeah we have a video source")
-                            if (!_pressTimer.running) {
-                                pressTime = 1;
-                                _pressTimer.start();
-                                rew(5)
-                            }
-                            else {
-                                pressTime += 1
-                                rew(5*pressTime)
-                            }
-                        }
-                    }
+                    var middleY = height / 2
+
+                    return (
+                        (mouse.x >= middleX - Theme.iconSizeMedium &&
+                         mouse.x <= middleX + Theme.iconSizeMedium)
+                    &&
+                        (mouse.y >= middleY - Theme.iconSizeMedium &&
+                         mouse.y <= middleY + Theme.iconSizeMedium)
+                    )
                 }
 
-                Timer{
-                    id:dblClicktimer
-                    interval: 250
-                    onTriggered: videoPoster.singleClick()
+                function isForwardClick(mouse) {
+                    var middleX = width / 2
+                    var middleY = height / 2
+
+                    return (
+                        (mouse.x > middleX + Theme.iconSizeMedium
+                                          + Theme.paddingMedium)
+                    &&
+                        (mouse.y >= middleY - Theme.iconSizeMedium &&
+                         mouse.y <= middleY + Theme.iconSizeMedium)
+                    )
+                }
+
+                function isRewindClick(mouse) {
+                    var middleX = width / 2
+                    var middleY = height / 2
+
+                    return (
+                        (mouse.x < middleX - Theme.iconSizeMedium
+                                          - Theme.paddingMedium)
+                    &&
+                        (mouse.y >= middleY - Theme.iconSizeMedium &&
+                         mouse.y <= middleY + Theme.iconSizeMedium)
+                    )
+
                 }
 
                 onClicked: {
-                    mouseX = mouse.x
-                    mouseY = mouse.y
-                    if(dblClicktimer.running)
-                    {
-                        videoPoster.dblClick()
-                        dblClicktimer.stop()
+                    if (isPlayPauseClick(mouse)) {
+                        togglePlay()
+                    } else if (isForwardClick(mouse)) {
+                        ffwd(10)
+                    } else if (isRewindClick(mouse)) {
+                        rew(5)
+                    } else {
+                        toggleControls()
                     }
-                    else
-                        dblClicktimer.restart()
                 }
-                onPressAndHold: {
+
+                //                onPressAndHold: {
                     // if (onlyMusic.opacity == 1.0) {
                     //     if (onlyMusic.source == Qt.resolvedUrl("images/audio.png")) {
                     //         onlyMusic.state = "mc"
@@ -754,7 +912,7 @@ Page {
                     //         onlyMusic.state = "default"
                     //     }
                     // }
-                }
+//                }
                 onPositionChanged: {
                     if ((enableSubtitles) && (currentVideoSub)) subTitleLoader.item.checkSubtitles()
                 }
@@ -769,7 +927,7 @@ Page {
         anchors.fill: parent
         pinch.target: video
         pinch.minimumScale: 1
-        pinch.maximumScale: 1 + (((videoPlayerPage.width/videoPlayerPage.height) - (video.sourceRect.width/video.sourceRect.height)) / (video.sourceRect.width/video.sourceRect.height))
+        pinch.maximumScale: 1 + (((root.width/root.height) - (video.sourceRect.width/video.sourceRect.height)) / (video.sourceRect.width/video.sourceRect.height))
         pinch.dragAxis: Pinch.XAndYAxis
         property bool pinchIn: false
         onPinchUpdated: {
@@ -791,41 +949,42 @@ Page {
         }
     }
 
-    Private.Jupii {
+    Jupii {
         id: jupii
     }
 
-    children: [
+//    children: [
 
         // Use a black background if not isLightTheme
-        Rectangle {
-            anchors.fill: parent
-            color: isLightTheme ? "white" : "black"
-            //visible: video.visible
-        },
+//        Rectangle {
+//            anchors.fill: parent
+//            color: isLightTheme ? "white" : "black"
+//            //visible: video.visible
+//        },
 
         VideoOutput {
             id: video
+            z: -1000
             anchors.fill: parent
             transformOrigin: Item.Center
 
             function checkScaleStatus() {
-                if ((videoPlayerPage.width/videoPlayerPage.height) > sourceRect.width/sourceRect.height) allowScaling = true;
-                console.log(videoPlayerPage.width/videoPlayerPage.height + " - " + sourceRect.width/sourceRect.height);
+                if ((root.width/root.height) > sourceRect.width/sourceRect.height) allowScaling = true;
+                console.log(root.width/root.height + " - " + sourceRect.width/sourceRect.height);
             }
 
             onFillModeChanged: {
-                if (fillMode === VideoOutput.PreserveAspectCrop) scale = 1 + (((videoPlayerPage.width/videoPlayerPage.height) - (sourceRect.width/sourceRect.height)) / (sourceRect.width/sourceRect.height))
+                if (fillMode === VideoOutput.PreserveAspectCrop) scale = 1 + (((root.width/root.height) - (sourceRect.width/sourceRect.height)) / (sourceRect.width/sourceRect.height))
                 else scale=1
             }
 
-            source: Private.Mplayer {
+            source: Mplayer {
                 id: mediaPlayer
-                dataContainer: videoPlayerPage
-                streamTitle: videoPlayerPage.streamTitle
-                streamUrl: videoPlayerPage.streamUrl
-                isPlaylist: false // videoPlayerPage.isPlaylist
-                isLiveStream: false // videoPlayerPage.isLiveStream
+                dataContainer: root
+                streamTitle: root.streamTitle
+                streamUrl: root.streamUrl
+                isPlaylist: false // root.isPlaylist
+                isLiveStream: false // root.isLiveStream
                 onPlaybackStateChanged: {
                     if (playbackState == MediaPlayer.PlayingState) {
                         // if (onlyMusic.opacity == 1.0) onlyMusic.playing = true
@@ -901,18 +1060,14 @@ Page {
             visible: mediaPlayer.status >= MediaPlayer.Loaded && mediaPlayer.status <= MediaPlayer.EndOfMedia
             width: parent.width
             height: parent.height
-            anchors.centerIn: videoPlayerPage
-
-            DisplayBlanking {
-                preventBlanking: mediaPlayer.playbackState == MediaPlayer.PlayingState
-            }
+            anchors.centerIn: root
         }
-    ]
+//    ]
 
     Item {
         id: scaleIndicator
 
-        anchors.horizontalCenter: videoPlayerPage.horizontalCenter
+        anchors.horizontalCenter: root.horizontalCenter
         anchors.top: parent.top
         anchors.topMargin: 4 * Theme.paddingLarge
         opacity: 0
@@ -961,85 +1116,6 @@ Page {
         }
     }
 
-    // Need some more time to figure that out completely
-    // Timer {
-    //     id: showTimeAndTitle
-    //     property int count: 0
-    //     interval: 1000
-    //     repeat: true
-    //     triggeredOnStart: true
-    //     onTriggered: {
-    //         ++count
-    //         if (count >= 5) {
-    //             stop()
-    //             coverTime.fadeOut.start()
-    //             urlHeader.state = ""
-    //             titleHeader.state = ""
-    //             count = 0
-    //         } else {
-    //             coverTime.visible = true
-    //             if (title.toString().length !== 0 && !mainWindow.applicationActive) titleHeader.state = "cover";
-    //             else if (streamUrl.toString().length !== 0 && !mainWindow.applicationActive) urlHeader.state = "cover";
-    //         }
-    //     }
-    // }
-
-    // Rectangle {
-    //     width: parent.width
-    //     height: Theme.fontSizeHuge
-    //     y: coverTime.y + 10
-    //     color: isLightTheme? "white" : "black"
-    //     opacity: 0.4
-    //     visible: coverTime.visible
-    // }
-
-    // Item {
-    //     id: coverTime
-    //     property alias fadeOut: fadeout
-    //     //visible: !mainWindow.applicationActive && liveView
-    //     visible: false
-    //     onVisibleChanged: {
-    //         if (visible) fadein.start()
-    //     }
-    //     anchors.top: titleHeader.bottom
-    //     anchors.topMargin: 15
-    //     x : (parent.width / 2) - ((curPos.width/2) + (dur.width/2))
-    //     NumberAnimation {
-    //         id: fadein
-    //         target: coverTime
-    //         property: "opacity"
-    //         easing.type: Easing.InOutQuad
-    //         duration: 500
-    //         from: 0
-    //         to: 1
-    //     }
-    //     NumberAnimation {
-    //         id: fadeout
-    //         target: coverTime
-    //         property: "opacity"
-    //         duration: 500
-    //         easing.type: Easing.InOutQuad
-    //         from: 1
-    //         to: 0
-    //         onStopped: coverTime.visible = false;
-    //     }
-    //     Label {
-    //         id: dur
-    //         text: videoDuration
-    //         anchors.left: curPos.right
-    //         color: Theme.primaryColor
-    //         font.pixelSize: Theme.fontSizeHuge
-    //         font.bold: true
-    //     }
-    //     Label {
-    //         id: curPos
-    //         text: videoPosition + " / "
-    //         color: Theme.primaryColor
-    //         font.pixelSize: Theme.fontSizeHuge
-    //         font.bold: true
-    //     }
-    // }
-
     Keys.onPressed: {
         if (event.key === Qt.Key_Space) videoPauseTrigger();
         if (event.key === Qt.Key_Left && mediaPlayer.seekable) {
@@ -1050,58 +1126,7 @@ Page {
         }
     }
 
-    // CoverActionList {
-    //     id: coverActionPlay
-    //     enabled: liveView && !isPlaylist
-    //
-    //     //        CoverAction {
-    //     //            iconSource: "image://theme/icon-cover-next"
-    //     //        }
-    //
-    //     CoverAction {
-    //         iconSource: {
-    //             if (videoPoster.player.playbackState === MediaPlayer.PlayingState) return "image://theme/icon-cover-pause"
-    //             else return "image://theme/icon-cover-play"
-    //         }
-    //         onTriggered: {
-    //             //console.debug("Pause triggered");
-    //             videoPauseTrigger();
-    //             if (!showTimeAndTitle.running) showTimeAndTitle.start();
-    //             else showTimeAndTitle.count = 0;
-    //             videoPoster.hideControls();
-    //         }
-    //     }
-    // }
-    // CoverActionList {
-    //     id: coverActionPlayNext
-    //     enabled: liveView && mainWindow.modelPlaylist.isNext() && isPlaylist
-    //
-    //     //        CoverAction {
-    //     //            iconSource: "image://theme/icon-cover-next"
-    //     //        }
-    //
-    //     CoverAction {
-    //         iconSource: {
-    //             if (videoPoster.player.playbackState === MediaPlayer.PlayingState) return "image://theme/icon-cover-pause"
-    //             else return "image://theme/icon-cover-play"
-    //         }
-    //         onTriggered: {
-    //             //console.debug("Pause triggered");
-    //             videoPauseTrigger();
-    //             if (!showTimeAndTitle.running) showTimeAndTitle.start();
-    //             else showTimeAndTitle.count = 0;
-    //             videoPoster.hideControls();
-    //         }
-    //     }
-    //     CoverAction {
-    //         iconSource: "image://theme/icon-cover-next-song"
-    //         onTriggered: {
-    //             videoPoster.next()
-    //         }
-    //     }
-    // }
-
-    Private.MprisConnector {
+    MprisConnector {
         id: mprisPlayer
 
         onPauseRequested: {
@@ -1111,7 +1136,7 @@ Page {
             videoPoster.play();
         }
         onPlayPauseRequested: {
-            videoPlayerPage.videoPauseTrigger();
+            root.videoPauseTrigger();
         }
         onStopRequested: {
             videoPoster.player.stop();
@@ -1126,8 +1151,4 @@ Page {
             mediaPlayer.seek(offset);
         }
     }
-
-    // Connections {
-    //     target: mprisPlayer
-    // }
 }

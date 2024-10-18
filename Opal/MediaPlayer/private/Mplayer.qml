@@ -21,7 +21,7 @@ MediaPlayer {
     property bool isMinMode
 
     function loadPlaylistPage() {
-        var playlistPage = pageStack.pushAttached(Qt.resolvedUrl("../PlaylistPage.qml"), { "dataContainer" : dataContainer, "modelPlaylist" : mainWindow.modelPlaylist, "isPlayer" : true});
+//        var playlistPage = pageStack.pushAttached(Qt.resolvedUrl("../PlaylistPage.qml"), { "dataContainer" : dataContainer, "modelPlaylist" : mainWindow.modelPlaylist, "isPlayer" : true});
 
     }
 
@@ -35,21 +35,21 @@ MediaPlayer {
         if (typeof(dPage) !== "undefined") {
             if (inBackground === "inBackground") {
 //                dPage = pageStack.pushAttached(Qt.resolvedUrl("../FileDetails.qml"), {
-                dPage = pageStack.pushAttached(Qt.resolvedUrl("FileDetails.qml"), {
-                                                   filename: streamUrl,
-                                                   title: mDataTitle,
-                                                   artist: metaData.albumArtist,
-                                                   videocodec: metaData.videoCodec,
-                                                   resolution: metaData.resolution,
-                                                   videobitrate: metaData.videoBitRate,
-                                                   framerate: metaData.videoFrameRate,
-                                                   audiocodec: metaData.audioCodec,
-                                                   audiobitrate: metaData.audioBitRate,
-                                                   samplerate: metaData.sampleRate,
-                                                   copyright: metaData.copyright,
-                                                   date: metaData.date,
-                                                   size: metaData.size // mainWindow.humanSize(_fm.getSize(streamUrl)) //metaData.size
-                                               });
+//                dPage = pageStack.pushAttached(Qt.resolvedUrl("FileDetails.qml"), {
+//                                                   filename: streamUrl,
+//                                                   title: mDataTitle,
+//                                                   artist: metaData.albumArtist,
+//                                                   videocodec: metaData.videoCodec,
+//                                                   resolution: metaData.resolution,
+//                                                   videobitrate: metaData.videoBitRate,
+//                                                   framerate: metaData.videoFrameRate,
+//                                                   audiocodec: metaData.audioCodec,
+//                                                   audiobitrate: metaData.audioBitRate,
+//                                                   samplerate: metaData.sampleRate,
+//                                                   copyright: metaData.copyright,
+//                                                   date: metaData.date,
+//                                                   size: metaData.size // mainWindow.humanSize(_fm.getSize(streamUrl)) //metaData.size
+//                                               });
             }
             else {
 //                dPage = pageStack.push(Qt.resolvedUrl("../FileDetails.qml"), {
