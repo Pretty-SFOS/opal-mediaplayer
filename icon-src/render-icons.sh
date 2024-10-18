@@ -34,7 +34,14 @@ for i in raw/*.svg; do
 done
 
 cNAME="theme icons"
-cITEMS=("icon-m-cast@112")
-cRESOLUTIONS=(F1)
+cITEMS=(icon-m-{cast,forward,rewind,play,pause})
+cRESOLUTIONS=(112)
 cTARGETS=(../Opal/MediaPlayer/private/images)
 render_batch
+
+for i in ../Opal/MediaPlayer/private/images/*.png; do
+    cat <<-EOF > "$i.license"
+	SPDX-FileCopyrightText: Mirian Margiani
+	SPDX-License-Identifier: CC-BY-SA-4.0
+	EOF
+done
