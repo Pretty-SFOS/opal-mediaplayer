@@ -3,21 +3,6 @@ SPDX-FileCopyrightText: 2023-2024 Mirian Margiani
 SPDX-License-Identifier: GFDL-1.3-or-later
 -->
 
-# Template for new Opal modules
-
-Copy this repository to setup a new Opal module.
-
-1. Create a local copy of the contents of this repository.
-2. Run `setup.sh` and follow the instructions.
-3. Import your source code to `Opal/MediaPlayer/` and write documentation.
-4. Add an example to `README.md`.
-5. Update `release-module.sh`: if your module has no translations, set `cTRANSLATE=(Opal)` to `cTRANSLATE=()`
-5. Remove this introduction from `README.md`.
-6. Add screenshots to `doc/` and update `README.md` accordingly.
-7. Run `./release-module.sh` to build docs and create a release bundle.
-
-<hr>
-
 # MediaPlayer
 
 QML module for adding media player views to Sailfish apps
@@ -25,31 +10,43 @@ QML module for adding media player views to Sailfish apps
 This module provides a media player page with support for subtitles.
 
 
+## Status
+
+The module is already usable but the code is still extremely messy and undocumented.
+However, the module is based on Leszek Lesner's [video player for SailfishOS](https://github.com/llelectronics/videoPlayer)
+which is quite mature.
+
+
 ## Usage
+
+Put this in `MyVideoPlayer.qml`:
 
 ```{qml}
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import Opal.MediaPlayer 1.0
 
-MyComponent {
-    // ...
+VideoPlayerPage {
+    autoplay: false
+    mprisAppId: "My App"
+    path: "/path/to/my/video.mp4"
+    title: "My Video"
 }
+```
+
+Then call this from somewhere in your app:
+
+```{qml}
+pageStack.push("MyVideoPlayer.qml")
 ```
 
 ## Screenshots
 
 Screenshots can be found in the [doc](doc/) directory.
 
-<!--
 | 1. | 2. |
 |-|-|
 | <img src="./doc/screenshot-01.webp" width="600" /> | <img src="./doc/screenshot-02.webp" width="600" /> |
-
-| 1. | 2. | 3. |
-|-|-|-|
-| <img src="./doc/screenshot-01.webp" width="600" /> | <img src="./doc/screenshot-02.webp" width="600" /> | <img src="./doc/screenshot-03.webp" width="600" /> |
--->
 
 ## How to use
 
