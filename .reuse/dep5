@@ -10,3 +10,8 @@ License: GPL-3.0-or-later
 Files: doc/screenshot-*.webp
 Copyright: Screenshot Author
 License: CC-BY-SA-4.0
+
+Files: icon-src/*.svg
+Copyright: Mirian Margiani
+License: CC-BY-SA-4.0
+Comment: source files for icons

@@ -7,6 +7,8 @@
 build*
 build-doc*
 
+icon-src/raw
+
 *.pro.user
 *.creator.user
 *.spec.*
