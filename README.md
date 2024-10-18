@@ -9,7 +9,7 @@ Copy this repository to setup a new Opal module.
 
 1. Create a local copy of the contents of this repository.
 2. Run `setup.sh` and follow the instructions.
-3. Import your source code to `Opal/MyModule/` and write documentation.
+3. Import your source code to `Opal/MediaPlayer/` and write documentation.
 4. Add an example to `README.md`.
 5. Update `release-module.sh`: if your module has no translations, set `cTRANSLATE=(Opal)` to `cTRANSLATE=()`
 5. Remove this introduction from `README.md`.
@@ -18,11 +18,11 @@ Copy this repository to setup a new Opal module.
 
 <hr>
 
-# MyModule
+# MediaPlayer
 
-Brief description of the module.
+QML module for adding media player views to Sailfish apps
 
-Longer description of which problem the module solves, and how it makes life easier.
+This module provides a media player page with support for subtitles.
 
 
 ## Usage
@@ -30,7 +30,7 @@ Longer description of which problem the module solves, and how it makes life eas
 ```{qml}
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import Opal.MyModule 1.0
+import Opal.MediaPlayer 1.0
 
 MyComponent {
     // ...
@@ -99,7 +99,7 @@ details on how to translate date formats to your local format.
 ## License
 
     Copyright (C)  Mirian Margiani
-    Program: opal-mymodule
+    Program: opal-mediaplayer
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

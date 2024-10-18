@@ -1,10 +1,10 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: Opal.MyModule
+Upstream-Name: Opal.MediaPlayer
 Upstream-Contact: Mirian Margiani <mixosaurus+ichthyo@pm.me>
-Source: https://github.com/Pretty-SFOS/opal-mymodule
+Source: https://github.com/Pretty-SFOS/opal-mediaplayer
 
 Files: translations/*
-Copyright: Opal.MyModule translations contributors
+Copyright: Opal.MediaPlayer translations contributors
 License: GPL-3.0-or-later
 
 Files: doc/screenshot-*.webp

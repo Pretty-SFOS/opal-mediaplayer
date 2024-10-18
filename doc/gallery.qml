@@ -1,11 +1,11 @@
-//@ This file is part of Opal.MyModule for use in harbour-opal-gallery.
-//@ https://github.com/Pretty-SFOS/opal-mymodule
+//@ This file is part of Opal.MediaPlayer for use in harbour-opal-gallery.
+//@ https://github.com/Pretty-SFOS/opal-mediaplayer
 //@ SPDX-License-Identifier: GPL-3.0-or-later
 //@ SPDX-FileCopyrightText: 2023-2024 Mirian Margiani
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0 as S
-import Opal.MyModule 1.0 as M
+import Opal.MediaPlayer 1.0 as M
 
 S.Page {
     id: root
