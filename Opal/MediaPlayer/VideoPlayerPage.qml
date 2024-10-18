@@ -150,11 +150,9 @@ Page {
     property bool subtitleSolid: true // dataContainer.subtitleSolid
     // property bool isPlaylist: dataContainer.isPlaylist
     property bool isNewSource: false
-    // property string onlyMusicState: dataContainer.onlyMusicState
     property bool allowScaling: false
     property bool isRepeat: false
 
-    // property alias onlyMusic: onlyMusic
     property alias videoPoster: videoPoster
 
     // +++
@@ -236,23 +234,27 @@ Page {
 
         AnimatedImage {
             id: onlyMusic
+            enabled: false
+
             anchors.centerIn: parent
-            source: Qt.resolvedUrl("images/audio.png")
-            opacity: 0.0
-            Behavior on opacity { FadeAnimator { duration: 80 } }
+            source: Qt.resolvedUrl("private/images/audio.gif")
+            opacity: enabled ? 0.75 : 0.0
             width: Screen.width / 1.25
             height: width
-            playing: false
-            state: onlyMusicState
+            playing: true
             visible: opacity > 0
-            }
+
+            Behavior on opacity { FadeAnimator {} }
         }
 
         ProgressCircle {
             id: progressCircle
 
+            enabled: false
             anchors.centerIn: parent
-            visible: false
+            visible: opacity > 0
+            opacity: enabled ? 1.0 : 0.0
+            Behavior on opacity { FadeAnimator {} }
 
             Timer {
                 interval: 32
@@ -405,7 +407,8 @@ Page {
                         subTitleLoader.item.getSubtitles(subtitleUrl);
                     }
 
-                    // if (mediaPlayer.hasAudio === true && mediaPlayer.hasVideo === false) onlyMusic.playing = true
+                    if (mediaPlayer.hasAudio === true &&
+                            mediaPlayer.hasVideo === false) onlyMusic.playing = true
                 }
 
                 // onNextClicked: {
@@ -445,9 +448,9 @@ Page {
                 function pause() {
                     mediaPlayer.pause();
                     if (controls.opacity === 0.0) toggleControls();
-                    progressCircle.visible = false;
+                    progressCircle.enabled = false;
                     if (! mediaPlayer.seekable) mediaPlayer.stop();
-                    // onlyMusic.playing = false
+                    onlyMusic.playing = false
                 }
 
                 // function next() {
@@ -601,26 +604,30 @@ Page {
                 isLiveStream: false // root.isLiveStream
                 onPlaybackStateChanged: {
                     if (playbackState == MediaPlayer.PlayingState) {
-                        // if (onlyMusic.opacity == 1.0) onlyMusic.playing = true
+                        if (onlyMusic.enabled) onlyMusic.playing = true
                         mprisPlayer.playbackStatus = Mpris.Playing
                         video.checkScaleStatus()
                     }
                     else  {
-                        // if (onlyMusic.opacity == 1.0) onlyMusic.playing = false
+                        if (onlyMusic.enabled) onlyMusic.playing = false
                         mprisPlayer.playbackStatus = Mpris.Paused
                     }
                 }
                 onDurationChanged: {
                     //console.debug("Duration(msec): " + duration);
-                    videoPoster.duration = (duration/1000);
-                    // if (hasAudio === true && hasVideo === false) onlyMusic.opacity = 1.0
-                    // else onlyMusic.opacity = 0.0;
+                    videoPoster.duration = (duration/1000)
+
+                    if (hasAudio === true && hasVideo === false) {
+                        onlyMusic.enabled = true
+                    } else {
+                        onlyMusic.enabled = false
+                    }
                 }
                 onStatusChanged: {
                     //errorTxt.visible = false     // DEBUG: Always show errors for now
                     //errorDetail.visible = false
-                    //console.debug("[videoPlayer.qml]: mediaPlayer.status: " + mediaPlayer.status + " isPlaylist:" + isPlaylist)
-                    if (mediaPlayer.status === MediaPlayer.Loading || mediaPlayer.status === MediaPlayer.Buffering || mediaPlayer.status === MediaPlayer.Stalled) progressCircle.visible = true;
+                    // console.debug("[videoPlayer.qml]: mediaPlayer.status: " + mediaPlayer.status + " isPlaylist:" + isPlaylist)
+                    if (mediaPlayer.status === MediaPlayer.Loading || mediaPlayer.status === MediaPlayer.Buffering || mediaPlayer.status === MediaPlayer.Stalled) progressCircle.enabled = true;
                     else if (mediaPlayer.status === MediaPlayer.EndOfMedia) {
                         videoPoster.showControls();
                         // if (isPlaylist && mainWindow.modelPlaylist.isNext()) {
@@ -628,7 +635,7 @@ Page {
                         // }
                     }
                     else  {
-                        progressCircle.visible = false;
+                        progressCircle.enabled = false;
                         /*if (!isPlaylist) */loadMetaDataPage("inBackground");
                         // else loadPlaylistPage();
                     }
