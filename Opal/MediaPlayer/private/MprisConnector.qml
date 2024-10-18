@@ -11,9 +11,6 @@ import Amber.Mpris 1.0
 MprisPlayer {
     id: mprisPlayer
 
-    // serviceName: "llsVplayer"
-    serviceName: "FileBrowser"
-
     property string title
 
     function hide() {
@@ -36,8 +33,10 @@ MprisPlayer {
         }
     }
 
+    serviceName: "OpalMediaPlayer"
+
     // Mpris2 Root Interface
-    identity: "Video Player"
+    identity: "Opal Video Player"
 
     // Mpris2 Player Interface
     canControl: true

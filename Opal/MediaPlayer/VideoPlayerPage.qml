@@ -60,9 +60,10 @@ Page {
     property bool continueInBackground: false
     property bool enableDarkBackground: true
 
+    property alias mprisAppId: mprisPlayer.identity
+
     readonly property alias _titleOverlay: titleOverlayItem
     readonly property bool _isPlaying: mediaPlayer.playbackState == MediaPlayer.PlayingState
-    property string _errorString
 
     function play() {
         videoPoster.play()
