@@ -1,9 +1,15 @@
+//@ This file is part of opal-mediaplayer.
+//@ https://github.com/Pretty-SFOS/opal-mediaplayer
+//@ SPDX-FileCopyrightText: 2024 Mirian Margiani
+//@ SPDX-FileCopyrightText: 2013-2020 Leszek Lesner
+//@ SPDX-License-Identifier: GPL-3.0-or-later
+
 WorkerScript.onMessage = function(url) {
   var exts = ['.srt', '.ssa', '.ass'];
   var parsers = [SrtParser, SsaParser, SsaParser];
   var e, cp, def = true, subtitles = [];
   var doc = new XMLHttpRequest();
-  
+
   doc.onreadystatechange = function() {
     if (doc.readyState == XMLHttpRequest.DONE) {
       //console.debug('[getsubtitles] doc.status for ' + exts[cp] + ': ' + doc.status);

@@ -1,3 +1,9 @@
+//@ This file is part of opal-mediaplayer.
+//@ https://github.com/Pretty-SFOS/opal-mediaplayer
+//@ SPDX-FileCopyrightText: 2024 Mirian Margiani
+//@ SPDX-FileCopyrightText: 2013-2020 Leszek Lesner
+//@ SPDX-License-Identifier: GPL-3.0-or-later
+
 WorkerScript.onMessage = function(message) {
   var sub, text = [];
   var a = message.subtitles, pos = message.position*1000;
