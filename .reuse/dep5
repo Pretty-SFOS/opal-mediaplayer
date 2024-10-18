@@ -11,7 +11,7 @@ Files: doc/screenshot-*.webp
 Copyright: Screenshot Author
 License: CC-BY-SA-4.0
 
-Files: icon-src/*.svg
+Files: icon-src/*.svg icon-src/audio.rawr
 Copyright: Mirian Margiani
 License: CC-BY-SA-4.0
 Comment: source files for icons
