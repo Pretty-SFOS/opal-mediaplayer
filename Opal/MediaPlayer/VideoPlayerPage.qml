@@ -124,7 +124,7 @@ Page {
     Component.onCompleted: {
         if (autoplay) {
             //console.debug("[videoPlayer.qml] Autoplay activated for url: " + videoPoster.source);
-            videoPoster.play();
+            play()
             showNavigationIndicator = false;
             mprisPlayer.title = streamTitle;
         }
@@ -213,7 +213,9 @@ Page {
         ProgressCircle {
             id: progressCircle
 
-            enabled: false
+            enabled: mediaPlayer.status === MediaPlayer.Loading
+                     || mediaPlayer.status === MediaPlayer.Buffering
+                     || mediaPlayer.status === MediaPlayer.Stalled
             anchors.centerIn: parent
             visible: opacity > 0
             opacity: enabled ? 1.0 : 0.0
@@ -222,8 +224,10 @@ Page {
             Timer {
                 interval: 32
                 repeat: true
-                onTriggered: progressCircle.value = (progressCircle.value + 0.005) % 1.0
-                running: visible
+                running: progressCircle.visible
+                onTriggered: {
+                    progressCircle.value = (progressCircle.value + 0.005) % 1.0
+                }
             }
         }
 
@@ -321,7 +325,9 @@ Page {
                     }
 
                     if (mediaPlayer.hasAudio === true &&
-                            mediaPlayer.hasVideo === false) onlyMusic.playing = true
+                            mediaPlayer.hasVideo === false) {
+                        onlyMusic.playing = true
+                    }
                 }
 
                 // onNextClicked: {
@@ -361,7 +367,7 @@ Page {
                 function pause() {
                     mediaPlayer.pause();
                     if (controls.opacity === 0.0) toggleControls();
-                    progressCircle.enabled = false;
+//                    progressCircle.enabled = false;
                     if (! mediaPlayer.seekable) mediaPlayer.stop();
                     onlyMusic.playing = false
                 }
@@ -550,15 +556,15 @@ Page {
                     //errorTxt.visible = false     // DEBUG: Always show errors for now
                     //errorDetail.visible = false
                     // console.debug("[videoPlayer.qml]: mediaPlayer.status: " + mediaPlayer.status + " isPlaylist:" + isPlaylist)
-                    if (mediaPlayer.status === MediaPlayer.Loading || mediaPlayer.status === MediaPlayer.Buffering || mediaPlayer.status === MediaPlayer.Stalled) progressCircle.enabled = true;
-                    else if (mediaPlayer.status === MediaPlayer.EndOfMedia) {
+//                    if (mediaPlayer.status === MediaPlayer.Loading || mediaPlayer.status === MediaPlayer.Buffering || mediaPlayer.status === MediaPlayer.Stalled) progressCircle.enabled = true;
+                    /*else*/ if (mediaPlayer.status === MediaPlayer.EndOfMedia) {
                         videoPoster.showControls();
                         // if (isPlaylist && mainWindow.modelPlaylist.isNext()) {
                         //     videoPoster.next();
                         // }
                     }
                     else  {
-                        progressCircle.enabled = false;
+//                        progressCircle.enabled = false;
                         /*if (!isPlaylist) */loadMetaDataPage("inBackground");
                         // else loadPlaylistPage();
                     }
@@ -567,6 +573,14 @@ Page {
                         if (dPage) dPage.title = metaData.title
                         mprisPlayer.title = metaData.title
                     }
+                }
+
+                onHasVideoChanged: {
+//                    if (hasAudio && !hasVideo) {
+//                        onlyMusic.playing = Qt.binding(function(){
+//                            return mediaPlayer.isPlaying
+//                        })
+//                    }
                 }
 
                 onError: {
