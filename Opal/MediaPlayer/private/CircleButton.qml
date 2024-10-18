@@ -32,9 +32,9 @@ IconButton {
     Rectangle {
         z: -1
         anchors.fill: parent
-        color: Theme.rgba(_activeColor, 0.9*Theme.opacityFaint)
+        color: Theme.rgba("black", Theme.opacityLow)
         radius: width / 2
         border.color: _activeColor
-        border.width: 3
+        border.width: 2
     }
 }
