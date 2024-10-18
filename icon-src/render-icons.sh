@@ -39,7 +39,9 @@ cRESOLUTIONS=(112)
 cTARGETS=(../Opal/MediaPlayer/private/images)
 render_batch
 
-for i in ../Opal/MediaPlayer/private/images/*.png; do
+# audio.rawr requires Glaxnimate for exporting so we skip it here
+
+for i in ../Opal/MediaPlayer/private/images/*.{png,gif}; do
     cat <<-EOF > "$i.license"
 	SPDX-FileCopyrightText: Mirian Margiani
 	SPDX-License-Identifier: CC-BY-SA-4.0
