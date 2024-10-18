@@ -90,7 +90,9 @@ Page {
     }
 
     onAutoplayChanged: {
-        if (autoplay) play()
+        if (autoplay && status === PageStatus.Active) {
+            play()
+        }
     }
 
     DisplayBlanking {
@@ -115,339 +117,13 @@ Page {
         }
     }
 
-//    MouseArea {
-//        id: mouseArea
-//        anchors.fill: parent
-//        onClicked: {
-//            console.log("CLICKED", _isPlaying)
-
-//            if (_isPlaying === true) {
-//                titleOverlayItem.show()
-//                pause()
-//            } else {
-//                titleOverlayItem.hide()
-//                play()
-//            }
-//        }
-//    }
-
     MediaTitleOverlay {
         id: titleOverlayItem
         shown: !autoplay
         title: videoPoster.player.metaData.title || ""
-
-        /*
-        Rectangle {
-            z: parent.z - 1000
-            anchors.fill: parent
-            color: Theme.rgba("bbbbbb", 0.5)
-        }
-        */
-
-//        MouseArea {
-//            anchors.fill: parent
-//            onClicked: {
-//                titleOverlayItem.hide()
-//            }
-//        }
-
-//        Item {
-//            id: controls
-//            anchors.fill: parent
-
-//            property int _clickCount: 0
-
-//            function forward(seconds) {
-//                // TODO
-//            }
-
-//            function rewind(seconds) {
-//                // TODO
-//            }
-
-//            Timer {
-//                id: multiClickTimer
-//                running: false
-//                interval: 1500
-//                onTriggered: stop()
-//                triggeredOnStart: false
-//            }
-
-//            CircleButton {
-//                anchors {
-//                    verticalCenter: playButton.verticalCenter
-//                    right: playButton.left
-//                    rightMargin: Theme.paddingLarge
-//                }
-//                icon.source: "private/images/icon-m-rewind.png"
-//                grow: 0.8 * Theme.paddingLarge
-
-//                onClicked: {
-//                    if (multiClickTimer.running) {
-//                        controls._clickCount += 1
-//                        /// forwardIndicator.visible = true
-//                        controls.forward(10*pressTime)
-//                    } else {
-//                        controls._clickCount = 1
-//                        multiClickTimer.start()
-//                        controls.forward(10)
-//                    }
-//                }
-//            }
-
-//            CircleButton {
-//                id: playButton
-//                anchors.centerIn: parent
-//                icon.source: _isPlaying ?
-//                    "private/images/icon-m-pause.png" :
-//                    "private/images/icon-m-play.png"
-//                grow: 1.5 * Theme.paddingLarge
-
-//                onClicked: {
-//                    togglePlay()
-//                }
-//            }
-
-//            CircleButton {
-//                anchors {
-//                    verticalCenter: playButton.verticalCenter
-//                    left: playButton.right
-//                    leftMargin: Theme.paddingLarge
-//                }
-//                icon.source: "private/images/icon-m-forward.png"
-//                grow: 0.8 * Theme.paddingLarge
-
-//                onClicked: {
-//                    if (multiClickTimer.running) {
-//                        controls._clickCount += 1
-//                        /// backwardIndicator.visible = true
-//                        controls.rewind(5*pressTime)
-//                    } else {
-//                        controls._clickCount = 1
-//                        multiClickTimer.start()
-//                        controls.rewind(5)
-//                    }
-//                }
-//            }
-//        }
-
-        /*
-            Rectangle {
-                anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
-                enabled: { if (controls.opacity == 1.0) return true; else return false; }
-                height: Theme.itemSizeMedium + (2 * Theme.paddingLarge)
-                //color: "black"
-                //opacity: 0.5
-                gradient: Gradient {
-                    GradientStop { position: 0.0; color: "transparent" }
-                    GradientStop { position: 1.0; color: isLightTheme ? "white" : "black" } //Theme.highlightColor} // Black seems to look and work better
-                }
-
-                BackgroundItem {
-                    id: aspectBtn
-                    anchors.right: parent.right
-                    anchors.rightMargin: Theme.paddingMedium
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: Theme.paddingMedium
-                    width: height
-                    height: Theme.iconSizeMedium
-                    visible: allowScaling
-                    onClicked: {
-                        toggleAspectRatio();
-                    }
-                    Image {
-                        source: "image://theme/icon-m-scale"
-                        anchors.fill: parent
-                    }
-                }
-                Label {
-                    id: maxTime
-                    anchors.right: {
-                        if (aspectBtn.visible) return aspectBtn.left
-    //                    else if (qualBtn.visible) return qualBtn.left
-                        else return parent.right
-                    }
-                    anchors.rightMargin: aspectBtn.visible ? Theme.paddingMedium : (2 * Theme.paddingLarge)
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: Theme.paddingLarge
-                    text: {
-                        if (positionSlider.maximumValue > 3599) return Format.formatDuration(positionSlider.maximumValue, Formatter.DurationLong)
-                        else return Format.formatDuration(positionSlider.maximumValue, Formatter.DurationShort)
-                    }
-                    visible: videoItem._loaded
-                }
-
-                BackgroundItem {
-                    id: repeatBtn
-                    anchors.left: parent.left
-                    anchors.leftMargin: Theme.paddingMedium
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: Theme.paddingMedium
-                    width: height
-                    height: Theme.iconSizeMedium
-                    onClicked: {
-                        isRepeat = !isRepeat
-                    }
-                    Image {
-                        source: isRepeat ? "image://theme/icon-m-repeat" : "image://theme/icon-m-forward"
-                        anchors.fill: parent
-                    }
-                }
-
-                BackgroundItem {
-                    id: castBtn
-                    anchors.left: repeatBtn.right
-                    anchors.leftMargin: Theme.paddingMedium
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: Theme.paddingMedium
-                    width: height
-                    visible: jupii.found
-                    height: Theme.iconSizeMedium
-                    onClicked: {
-                        jupii.addUrlOnceAndPlay(streamUrl.toString(), streamTitle, "", (onlyMusic.visible ? 1 : 2), "llsvplayer", "/usr/share/icons/hicolor/172x172/apps/harbour-videoPlayer.png")
-                    }
-                    Image {
-    //                    source: "../images/icon-m-cast.png"
-                        source: "images/icon-m-cast.png"
-                        anchors.fill: parent
-                        ColorOverlay {
-                            anchors.fill: parent
-                            source: parent
-                            color: "black"
-                            visible: isLightTheme
-                        }
-                    }
-                }
-
-                Slider {
-                    id: positionSlider
-
-                    anchors {
-                        left: castBtn.visible ? castBtn.right : repeatBtn.right
-                        right: {
-                            if (maxTime.visible) maxTime.left
-    //                        else if (qualBtn.visible) qualBtn.left
-                            else parent.right;
-                        }
-                        bottom: parent.bottom
-                    }
-                    anchors.bottomMargin: Theme.paddingLarge + Theme.paddingMedium
-                    enabled: { if (controls.opacity == 1.0) return true; else return false; }
-                    height: Theme.itemSizeMedium
-                    width: {
-                        var slidWidth = parent.width
-    //                    if (qualBtn.visible) slidWidth =- qualBtn.width
-                        if (maxTime.visible) slidWidth =- maxTime.width
-                        if (aspectBtn.visible) slidWidth =- aspectBtn.width
-                        return slidWidth
-                    }
-                    handleVisible: down ? true : false
-                    minimumValue: 0
-
-                    valueText: {
-                        if (value > 3599) return Format.formatDuration(value, Formatter.DurationLong)
-                        else return Format.formatDuration(value, Formatter.DurationShort)
-                    }
-                    onReleased: {
-                        if (videoItem.active) {
-                            videoItem.player.source = videoItem.source
-                            videoItem.player.seek(value * 1000)
-                            //videoItem.player.pause()
-                        }
-                    }
-                    onDownChanged: {
-                        if (down) {
-                            coverTime.visible = true
-                        }
-                        else
-                            coverTime.fadeOut.start()
-                    }
-                }
-            } // Bottom rect End
-            Row {
-                id: backwardIndicator
-                anchors.horizontalCenter: parent.horizontalCenter
-                y: parent.width / 2 - (playPauseImg.height + Theme.paddingLarge)
-                visible: false
-                spacing: -Theme.paddingLarge*2
-
-                Image {
-                    id: prev1
-                    width: Theme.itemSizeLarge
-                    height: Theme.itemSizeLarge
-                    anchors.verticalCenter: parent.verticalCenter
-                    fillMode: Image.PreserveAspectFit
-                    source: "image://theme/icon-cover-play"
-
-                    transform: Rotation{
-                        angle: 180
-                        origin.x: prev1.width/2
-                        origin.y: prev1.height/2
-                    }
-                }
-                Image {
-                    id: prev2
-                    width: Theme.itemSizeLarge
-                    height: Theme.itemSizeLarge
-                    anchors.verticalCenter: parent.verticalCenter
-                    fillMode: Image.PreserveAspectFit
-                    source: "image://theme/icon-cover-play"
-
-                    transform: Rotation{
-                        angle: 180
-                        origin.x: prev2.width/2
-                        origin.y: prev2.height/2
-                    }
-                }
-
-                Timer {
-                    id: hideBackward
-                    interval: 300
-                    onTriggered: backwardIndicator.visible = false
-                }
-
-                onVisibleChanged: if (backwardIndicator.visible) hideBackward.start()
-            }
-
-            Row {
-                id: forwardIndicator
-                anchors.horizontalCenter: parent.horizontalCenter
-                y: parent.width / 2 - (playPauseImg.height + Theme.paddingLarge)
-                visible: false
-                spacing: -Theme.paddingLarge*2
-
-                Image {
-                    width: Theme.itemSizeLarge
-                    height: Theme.itemSizeLarge
-                    anchors.verticalCenter: parent.verticalCenter
-                    fillMode: Image.PreserveAspectFit
-                    source: "image://theme/icon-cover-play"
-
-                }
-                Image {
-                    width: Theme.itemSizeLarge
-                    height: Theme.itemSizeLarge
-                    anchors.verticalCenter: parent.verticalCenter
-                    fillMode: Image.PreserveAspectFit
-                    source: "image://theme/icon-cover-play"
-                }
-
-                Timer {
-                    id: hideForward
-                    interval: 300
-                    onTriggered: forwardIndicator.visible = false
-                }
-
-                onVisibleChanged: if (forwardIndicator.visible) hideForward.start()
-            }
-        } */
     }
 
-
-
     // -------------------------------------
-
-
 
     property string streamUrl: path
     property string streamTitle: title
@@ -558,59 +234,19 @@ Page {
         //     }
         // }
 
-        // AnimatedImage {
-        //     id: onlyMusic
-        //     anchors.centerIn: parent
-        //     source: Qt.resolvedUrl("images/audio.png")
-        //     opacity: 0.0
-        //     Behavior on opacity { FadeAnimation { } }
-        //     width: Screen.width / 1.25
-        //     height: width
-        //     playing: false
-        //     state: onlyMusicState
-        //     visible: {
-        //         if (opacity == 0.0) false
-        //         else true
-        //     }
-        //
-        //     states: [
-        //             State {
-        //                 name: "default"
-        //                 PropertyChanges {
-        //                     target: onlyMusic;
-        //                     source: Qt.resolvedUrl("images/audio.png")
-        //                     width: Screen.width / 1.25
-        //                     height: onlyMusic.width
-        //                     rotation: 0
-        //                     playing: false
-        //                 }
-        //             },
-        //         State {
-        //             name: "mc"
-        //             PropertyChanges {
-        //                 target: onlyMusic;
-        //                 source: Qt.resolvedUrl("images/audio-mc-anim.gif")
-        //                 width: Screen.height / 1.25
-        //                 height: Screen.width - Theme.paddingMedium
-        //                 rotation: 90 -root.rotation
-        //                 playing: videoPoster.playing
-        //             }
-        //         },
-        //         State {
-        //             name: "eq"
-        //             PropertyChanges {
-        //                 target: onlyMusic;
-        //                 source: Qt.resolvedUrl("images/audio-eq-anim.gif")
-        //                 width: Screen.height / 1.25
-        //                 height: Screen.width / 0.8
-        //                 rotation: 90 -root.rotation
-        //                 playing: videoPoster.playing
-        //             }
-        //         }
-        //
-        //         ]
-        //
-        // }
+        AnimatedImage {
+            id: onlyMusic
+            anchors.centerIn: parent
+            source: Qt.resolvedUrl("images/audio.png")
+            opacity: 0.0
+            Behavior on opacity { FadeAnimator { duration: 80 } }
+            width: Screen.width / 1.25
+            height: width
+            playing: false
+            state: onlyMusicState
+            visible: opacity > 0
+            }
+        }
 
         ProgressCircle {
             id: progressCircle
@@ -731,7 +367,7 @@ Page {
         Item {
             id: mediaItem
             property bool active : true
-            visible: active /*&& mainWindow.applicationActive*/
+            visible: active
             parent: pincher.enabled ? pincher : flick
             anchors.fill: parent
 
@@ -747,6 +383,7 @@ Page {
                 //duration: videoDuration
                 active: mediaItem.active
                 source: streamUrl
+
                 onSourceChanged: {
                     position = 0;
                     player.seek(0);
@@ -762,11 +399,12 @@ Page {
                     player.source = source;
                     console.debug("Starting playback")
                     player.play();
-                    // if (isDash) minPlayer.play();
                     hideControls();
+
                     if (enableSubtitles) {
                         subTitleLoader.item.getSubtitles(subtitleUrl);
                     }
+
                     // if (mediaPlayer.hasAudio === true && mediaPlayer.hasVideo === false) onlyMusic.playing = true
                 }
 
@@ -783,12 +421,9 @@ Page {
                 // }
 
                 function toggleControls() {
-                    // console.debug("Controls Opacity:" + controls.opacity);
                     if (controls.opacity === 0.0) {
-                        //console.debug("Show controls");
                         showControls()
                     } else {
-                        //console.debug("Hide controls");
                         hideControls()
                     }
                 }
@@ -813,7 +448,6 @@ Page {
                     progressCircle.visible = false;
                     if (! mediaPlayer.seekable) mediaPlayer.stop();
                     // onlyMusic.playing = false
-                    // if (isDash) minPlayer.pause();
                 }
 
                 // function next() {
@@ -900,21 +534,10 @@ Page {
                     }
                 }
 
-                //                onPressAndHold: {
-                    // if (onlyMusic.opacity == 1.0) {
-                    //     if (onlyMusic.source == Qt.resolvedUrl("images/audio.png")) {
-                    //         onlyMusic.state = "mc"
-                    //     }
-                    //     else if (onlyMusic.source == Qt.resolvedUrl("images/audio-mc-anim.gif")) {
-                    //         onlyMusic.state = "eq"
-                    //     }
-                    //     else {
-                    //         onlyMusic.state = "default"
-                    //     }
-                    // }
-//                }
                 onPositionChanged: {
-                    if ((enableSubtitles) && (currentVideoSub)) subTitleLoader.item.checkSubtitles()
+                    if (enableSubtitles && currentVideoSub) {
+                        subTitleLoader.item.checkSubtitles()
+                    }
                 }
             }
         }
@@ -952,15 +575,6 @@ Page {
     Jupii {
         id: jupii
     }
-
-//    children: [
-
-        // Use a black background if not isLightTheme
-//        Rectangle {
-//            anchors.fill: parent
-//            color: isLightTheme ? "white" : "black"
-//            //visible: video.visible
-//        },
 
         VideoOutput {
             id: video
@@ -1062,7 +676,6 @@ Page {
             height: parent.height
             anchors.centerIn: root
         }
-//    ]
 
     Item {
         id: scaleIndicator
