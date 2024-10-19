@@ -122,7 +122,7 @@ MouseArea {
         // this breaks it:
 //        fillMode: Thumbnail.PreserveAspectFit
 
-        opacity: !videoItem._loaded && !autoplay ? 1.0 : 0.0
+        opacity: (!videoItem._loaded && !autoplay) ? 1.0 : 0.0
         Behavior on opacity { FadeAnimator { duration: 80 } }
 
         visible: opacity > 0.0
@@ -136,7 +136,7 @@ MouseArea {
         height: videoItem.height
 
         z: 1000
-        opacity: 1.0
+        opacity: 0.0  // start hidden
         Behavior on opacity { FadeAnimation { duration: 80; id: controlFade } }
         visible: opacity > 0.0
 
