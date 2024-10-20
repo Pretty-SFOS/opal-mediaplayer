@@ -495,7 +495,7 @@ Page {
 
     PinchArea {
         id: pincher
-        enabled: allowScaling && /*!pulley.visible &&*/ !errorBox.visible
+        enabled: allowScaling && /*!pulley.visible &&*/ !errorOverlay.visible
         visible: enabled
         anchors.fill: parent
         pinch.target: video
