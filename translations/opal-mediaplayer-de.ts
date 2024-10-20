@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="de">
+<TS version="2.1" language="de_DE">
 <context>
     <name>Opal.MediaPlayer</name>
     <message>
@@ -78,6 +78,16 @@
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="641"/>
         <source>Original</source>
         <translation>Originalgröße</translation>
+    </message>
+    <message>
+        <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="648"/>
+        <source>Play on repeat</source>
+        <translation>wiederholt abspielen</translation>
+    </message>
+    <message>
+        <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="649"/>
+        <source>Play once</source>
+        <translation>einmal abspielen</translation>
     </message>
 </context>
 </TS>

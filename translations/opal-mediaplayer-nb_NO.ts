@@ -79,5 +79,15 @@
         <source>Original</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="648"/>
+        <source>Play on repeat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="649"/>
+        <source>Play once</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
