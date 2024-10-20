@@ -285,7 +285,7 @@ MouseArea {
                 id: repeatBtn
                 icon.source: isRepeat ?
                     "image://theme/icon-m-repeat" :
-                    "image://theme/icon-m-forward"
+                    "image://theme/icon-m-repeat-single"
                 anchors {
                     left: parent.left
                     leftMargin: Theme.paddingMedium
