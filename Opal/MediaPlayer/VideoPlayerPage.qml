@@ -26,6 +26,8 @@ Page {
 
     readonly property alias _titleOverlay: titleOverlayItem
     readonly property bool _isPlaying: mediaPlayer.playbackState == MediaPlayer.PlayingState
+    readonly property bool _pageIsActive: status === PageStatus.Active ||
+                                          status === PageStatus.Activating
 
     function play() {
         videoPoster.play()
@@ -45,15 +47,17 @@ Page {
     onWidthChanged: video.checkScaleStatus()
 
     onStatusChanged: {
-        if (!continueInBackground && status === PageStatus.Deactivating) {
+        if (!continueInBackground && (
+                status === PageStatus.Deactivating ||
+                status === PageStatus.Inactive)) {
             pause()
-        } else if (autoplay && status === PageStatus.Activating) {
+        } else if (autoplay && _pageIsActive) {
             play()
         }
     }
 
     onAutoplayChanged: {
-        if (autoplay && status === PageStatus.Active) {
+        if (autoplay && _pageIsActive) {
             play()
         }
     }
@@ -120,15 +124,14 @@ Page {
     // +++
     property bool isLightTheme: Theme.colorScheme === Theme.DarkOnLight
 
-
     Component.onCompleted: {
-        if (autoplay) {
-            //console.debug("[videoPlayer.qml] Autoplay activated for url: " + videoPoster.source);
+        if (autoplay && _pageIsActive) {
             play()
-            showNavigationIndicator = false;
-            mprisPlayer.title = streamTitle;
+        } else {
+            mprisPlayer.title = streamTitle
         }
-        console.log("PLAYING", streamUrl, "AUTO", autoplay)
+
+        console.log("PLAYING", streamUrl, "AUTO", autoplay, "ACTIVE", _pageIsActive)
     }
 
     onStreamUrlChanged: {
@@ -322,7 +325,7 @@ Page {
                 }
 
                 function play() {
-                    playClicked();
+                    playClicked()
                 }
 
                 onPlayClicked: {
