@@ -18,6 +18,7 @@ Page {
     property string path
     property alias title: titleOverlayItem.title
     property bool autoplay: false
+    property bool repeat: false
     property bool continueInBackground: false
     property bool enableDarkBackground: true
 
@@ -113,7 +114,6 @@ Page {
     // property bool isPlaylist: dataContainer.isPlaylist
 //    property bool isNewSource: false
     property bool allowScaling: false
-    property bool isRepeat: false
 
     property alias videoPoster: videoPoster
 
@@ -157,7 +157,11 @@ Page {
         if (videoPoster.player.playbackState == MediaPlayer.PlayingState) videoPoster.pause();
         else if (videoPoster.source.toString().length !== 0) videoPoster.play();
         if (videoPoster.controls.opacity === 0.0) videoPoster.toggleControls();
+    }
 
+    function toggleRepeat() {
+        repeat = !repeat
+        repeatIndicator.show()
     }
 
     function toggleAspectRatio() {
@@ -566,7 +570,7 @@ Page {
                         } else {
                             videoPoster.showControls()
                         }
-                    } else if (!isRepeat &&
+                    } else if (!repeat &&
                                mediaPlayer.status === MediaPlayer.EndOfMedia) {
                         videoPoster.showControls()
                     } else {
@@ -600,7 +604,7 @@ Page {
                 }
 
                 onStopped: {
-                    if (isRepeat) {
+                    if (repeat) {
                         play()
                     }
                 }
@@ -647,6 +651,7 @@ Page {
         }
     }
 
+    NoticeLabel {
     Timer {
         id: showScaleIndicator
         interval: 1000
@@ -664,6 +669,11 @@ Page {
                 scaleIndicator.opacity = 1.0
             }
         }
+        id: repeatIndicator
+        anchors.centerIn: scaleIndicator
+        fontSize: Theme.fontSizeSmall
+        text: repeat ? qsTranslate("Opal.MediaPlayer", "Play on repeat") :
+                       qsTranslate("Opal.MediaPlayer", "Play once")
     }
 
     Keys.onPressed: {

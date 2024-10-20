@@ -283,7 +283,7 @@ MouseArea {
 
             IconButton {
                 id: repeatBtn
-                icon.source: isRepeat ?
+                icon.source: repeat ?
                     "image://theme/icon-m-repeat" :
                     "image://theme/icon-m-repeat-single"
                 anchors {
@@ -295,7 +295,7 @@ MouseArea {
                 width: Theme.iconSizeMedium
                 height: width
                 onClicked: {
-                    isRepeat = !isRepeat
+                    toggleRepeat()
                 }
             }
 
