@@ -5,6 +5,21 @@ SPDX-License-Identifier: GFDL-1.3-or-later
 
 # Changelog
 
+## 0.2.0 (2024-10-21)
+
+- Updated translations: Estonian, Spanish, Ukrainian, German, English
+- Disabled more dead code and worked on cleaning up messy parts
+- Fixed controls flickering in autoplay and when looping
+- Fixed controls styling in light ambiences
+- Fixed icon for "repeat once"
+- Fixed styling of notice when switching between scaling modes
+- Fixed pausing autoplay when the video player page is not active
+- Fixed runtime warnings due to dead code
+- Added a better icon for "repeat once"
+- Added a notice when switching between repeat modes
+- Added a background to seek notices to make them more visible
+- Added missing AGPL license text for "reuse" compliance
+
 ## 0.1.0 (2024-10-18)
 
 - First public release
