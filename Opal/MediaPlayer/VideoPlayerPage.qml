@@ -115,7 +115,7 @@ Page {
     property int subtitlesSize: Theme.fontSizeMedium // dataContainer.subtitlesSize
     property bool boldSubtitles: true // dataContainer.boldSubtitles
     property string subtitlesColor: "white" // dataContainer.subtitlesColor
-    property bool enableSubtitles: false // dataContainer.enableSubtitles // REQUIRED
+    property bool enableSubtitles: !!subtitleUrl.toString() // dataContainer.enableSubtitles // REQUIRED
     property variant currentVideoSub: []
     property Page dPage
 //    property bool savedPosition: false
@@ -204,8 +204,21 @@ Page {
         //     }
 
             MenuItem {
-                text: qsTr("Load Subtitle")
-                onClicked: pageStack.push(openSubsComponent)
+                visible: !!root.subtitleUrl.toString()
+                text: qsTranslate("Opal.MediaPlayer", "Clear subtitles")
+                onClicked: root.subtitleUrl = ''
+            }
+            MenuItem {
+                text: qsTranslate("Opal.MediaPlayer", "Load subtitles")
+                onClicked: {
+                    var dialog = pageStack.push(Qt.resolvedUrl("private/LoadSubtitlesDialog.qml"), {
+                        inFolder: path.slice(0, path.lastIndexOf('/')),
+                        forFile: path,
+                        })
+                    dialog.accepted.connect(function(){
+                        root.subtitleUrl = dialog.selected
+                    })
+                }
             }
 
         //     // MenuItem {
@@ -269,29 +282,25 @@ Page {
 
         Component {
             id: subItem
+
             SubtitlesItem {
                 id: subtitlesText
-                anchors { fill: parent; margins: root.inPortrait ? 10 : 50 }
+
+                anchors {
+                    fill: parent
+                    margins: root.inPortrait ? 10 : 50
+                }
+
                 wrapMode: Text.WordWrap
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignBottom
                 pixelSize: subtitlesSize
                 bold: boldSubtitles
                 color: subtitlesColor
-                visible: (enableSubtitles) && (currentVideoSub) ? true : false
+                visible: enableSubtitles && currentVideoSub
                 isSolid: subtitleSolid
             }
         }
-
-        // Component {
-        //     id: openSubsComponent
-        //     OpenDialog {
-        //         onFileOpen: {
-        //             subtitleUrl = path
-        //             pageStack.pop()
-        //         }
-        //     }
-        // }
 
         Rectangle {
             color: Theme.overlayBackgroundColor
