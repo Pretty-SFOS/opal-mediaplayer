@@ -4,10 +4,12 @@
 //@ SPDX-FileCopyrightText: 2023-2024 Mirian Margiani
 
 import QtQuick 2.0
+import Sailfish.Silica 1.0
 import Sailfish.Pickers 1.0
 import "gallery"
 
 VideoPickerPage {
+    allowedOrientations: Orientation.All
     onSelectedContentPropertiesChanged: {
         pageStack.push("gallery/ViewVideoPage.qml", {
             path: selectedContentProperties.filePath,
