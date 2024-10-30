@@ -5,6 +5,13 @@ SPDX-License-Identifier: GFDL-1.3-or-later
 
 # Changelog
 
+## 1.0.0 (2024-10-30)
+
+- Updated translations: Spanish, Swedish, Lithuanian, German, English
+- Added support for subtitles
+- Added an example page for new apps
+- Fixed "reuse" compliance
+
 ## 0.2.0 (2024-10-21)
 
 - Updated translations: Estonian, Spanish, Ukrainian, German, English
