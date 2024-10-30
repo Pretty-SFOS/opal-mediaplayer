@@ -70,24 +70,54 @@
         <translation>La reproducción ha fallado debido a un error esperado. Por favor, reinicia la aplicación e inténtalo de nuevo.</translation>
     </message>
     <message>
-        <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="640"/>
+        <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="208"/>
+        <source>Clear subtitles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="212"/>
+        <source>Load subtitles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="663"/>
         <source>Zoomed to fit screen</source>
         <translation>Ampliado para ajustarse a la pantalla</translation>
     </message>
     <message>
-        <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="641"/>
+        <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="664"/>
         <source>Original</source>
         <translation>Original</translation>
     </message>
     <message>
-        <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="648"/>
+        <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="671"/>
         <source>Play on repeat</source>
         <translation>Repetir continuamente</translation>
     </message>
     <message>
-        <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="649"/>
+        <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="672"/>
         <source>Play once</source>
         <translation>Reproducir una vez</translation>
+    </message>
+    <message>
+        <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="113"/>
+        <source>Select from file system</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="123"/>
+        <source>No files ready</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="126"/>
+        <source>Copy subtitle files in the SRT format next to the video file to open them quickly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="130"/>
+        <source>Pull down to pick a file.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
