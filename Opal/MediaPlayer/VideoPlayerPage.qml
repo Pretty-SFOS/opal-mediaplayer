@@ -88,6 +88,13 @@ Page {
         id: titleOverlayItem
         shown: !autoplay
         title: videoPoster.player.metaData.title || ""
+
+        Binding on opacity {
+            // This hides the title overlay when the pulley
+            // menu is open.
+            when: flick.topMargin > 0
+            value: 0.0
+        }
     }
 
     // -------------------------------------
@@ -183,17 +190,24 @@ Page {
         id: flick
         anchors.fill: parent
 
-        // PullDownMenu {
-        //     id: pulley
-        //
+        PullDownMenu {
+            id: pulley
+            enabled: titleOverlayItem.shown
+            visible: opacity > 0.0
+
+            opacity: enabled ? 1.0 : 0.0
+            Behavior on opacity { FadeAnimator { duration: 80 } }
+
         //     MenuItem {
         //         text: qsTr("Properties")
         //         onClicked: mediaPlayer.loadMetaDataPage("")
         //     }
-        //     // MenuItem {
-        //     //     text: qsTr("Load Subtitle")
-        //     //     onClicked: pageStack.push(openSubsComponent)
-        //     // }
+
+            MenuItem {
+                text: qsTr("Load Subtitle")
+                onClicked: pageStack.push(openSubsComponent)
+            }
+
         //     // MenuItem {
         //     //     text: qsTr("Playlist")
         //     //     onClicked: mainWindow.firstPage.openPlaylist();
@@ -208,7 +222,7 @@ Page {
         //             mediaPlayer.seek(savePositionMsec)
         //         }
         //     }
-        // }
+        }
 
         AnimatedImage {
             id: onlyMusic
