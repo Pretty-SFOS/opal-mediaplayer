@@ -52,8 +52,8 @@ mainLicenseSpdx: GPL-3.0-or-later
 # Use "EmptyDummyPage.qml" as placeholder in examples (provided by Opal Gallery).
 #
 # Example:
-# extraGalleryPages: Page1.qml Page2.qml MyComponent.qml
-extraGalleryPages: none
+# extraGalleryPages: none
+extraGalleryPages: ViewVideoPage.qml
 
 # where the module's sources are located
 # This url will be automatically generated from the default repository url and
