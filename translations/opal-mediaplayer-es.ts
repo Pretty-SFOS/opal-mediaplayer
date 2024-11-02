@@ -72,12 +72,12 @@
     <message>
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="208"/>
         <source>Clear subtitles</source>
-        <translation type="unfinished"></translation>
+        <translation>Borrar subtítulos</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="212"/>
         <source>Load subtitles</source>
-        <translation type="unfinished"></translation>
+        <translation>Cargar subtítulos</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="663"/>
@@ -102,22 +102,22 @@
     <message>
         <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="113"/>
         <source>Select from file system</source>
-        <translation type="unfinished"></translation>
+        <translation>Elija entre el sistema de archivos</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="123"/>
         <source>No files ready</source>
-        <translation type="unfinished"></translation>
+        <translation>No hay archivos listos</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="126"/>
         <source>Copy subtitle files in the SRT format next to the video file to open them quickly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Copie los archivos de subtítulos en formato SRT junto al archivo de video para abrirlos rápidamente.</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="130"/>
         <source>Pull down to pick a file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Desplácese hacia abajo para seleccionar un archivo.</translation>
     </message>
 </context>
 </TS>
