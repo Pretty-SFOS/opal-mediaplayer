@@ -5,6 +5,11 @@ SPDX-License-Identifier: GFDL-1.3-or-later
 
 # Changelog
 
+## 1.0.1 (2024-11-19)
+
+- Updated translations: Estonian, Slovak, Spanish, Belarusian
+- Fixed QML minification
+
 ## 1.0.0 (2024-10-30)
 
 - Updated translations: Spanish, Swedish, Lithuanian, German, English
