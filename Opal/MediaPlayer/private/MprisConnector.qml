@@ -14,12 +14,12 @@ MprisPlayer {
     property string title
 
     function hide() {
-        canControl = false;
-        title = "";
+        canControl = false
+        title = ""
     }
 
     function show() {
-        canControl = true;
+        canControl = true
     }
 
     onTitleChanged: {

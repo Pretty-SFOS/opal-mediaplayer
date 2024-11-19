@@ -21,13 +21,13 @@ MediaPlayer {
 //    property bool isMinMode
 
     function loadPlaylistPage() {
-//        var playlistPage = pageStack.pushAttached(Qt.resolvedUrl("../PlaylistPage.qml"), { "dataContainer" : dataContainer, "modelPlaylist" : mainWindow.modelPlaylist, "isPlayer" : true});
+//        var playlistPage = pageStack.pushAttached(Qt.resolvedUrl("../PlaylistPage.qml"), { "dataContainer" : dataContainer, "modelPlaylist" : mainWindow.modelPlaylist, "isPlayer" : true})
 
     }
 
     function loadMetaDataPage(inBackground) {
         //console.debug("Loading metadata page")
-        var mDataTitle;
+        var mDataTitle
         //console.debug(metaData.title)
         if (streamTitle != "") mDataTitle = streamTitle
         else mDataTitle = mainWindow.findBaseName(streamUrl)
@@ -49,7 +49,7 @@ MediaPlayer {
 //                                                   copyright: metaData.copyright,
 //                                                   date: metaData.date,
 //                                                   size: metaData.size // mainWindow.humanSize(_fm.getSize(streamUrl)) //metaData.size
-//                                               });
+//                                               })
             }
             else {
 //                dPage = pageStack.push(Qt.resolvedUrl("../FileDetails.qml"), {
@@ -67,7 +67,7 @@ MediaPlayer {
                                                    copyright: metaData.copyright,
                                                    date: metaData.date,
                                                    size: mainWindow.humanSize(_fm.getSize(streamUrl)) //metaData.size
-                                               });
+                                               })
             }
         }
     }

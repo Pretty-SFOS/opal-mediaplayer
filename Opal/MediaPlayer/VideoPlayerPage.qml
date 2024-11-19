@@ -153,10 +153,10 @@ Page {
         }
 
 //        if (streamUrl.toString().match("^file://") || streamUrl.toString().match("^/")) {
-//            savePositionMsec = "Not Found" //DB.getPosition(streamUrl.toString());
-//            console.debug("[videoPlayer.qml] streamUrl= " + streamUrl + " savePositionMsec= " + savePositionMsec + " streamUrl.length = " + streamUrl.length);
-//            if (savePositionMsec !== "Not Found") savedPosition = true;
-//            else savedPosition = false;
+//            savePositionMsec = "Not Found" //DB.getPosition(streamUrl.toString())
+//            console.debug("[videoPlayer.qml] streamUrl= " + streamUrl + " savePositionMsec= " + savePositionMsec + " streamUrl.length = " + streamUrl.length)
+//            if (savePositionMsec !== "Not Found") savedPosition = true
+//            else savedPosition = false
 //        }
         // if (isPlaylist) mainWindow.curPlaylistIndex = mainWindow.modelPlaylist.getPosition(streamUrl)
 //        isNewSource = true
@@ -164,9 +164,9 @@ Page {
 
     function videoPauseTrigger() {
         // this seems not to work somehow
-        if (videoPoster.player.playbackState == MediaPlayer.PlayingState) videoPoster.pause();
-        else if (videoPoster.source.toString().length !== 0) videoPoster.play();
-        if (videoPoster.controls.opacity === 0.0) videoPoster.toggleControls();
+        if (videoPoster.player.playbackState == MediaPlayer.PlayingState) videoPoster.pause()
+        else if (videoPoster.source.toString().length !== 0) videoPoster.play()
+        if (videoPoster.controls.opacity === 0.0) videoPoster.toggleControls()
     }
 
     function toggleRepeat() {
@@ -223,7 +223,7 @@ Page {
 
         //     // MenuItem {
         //     //     text: qsTr("Playlist")
-        //     //     onClicked: mainWindow.firstPage.openPlaylist();
+        //     //     onClicked: mainWindow.firstPage.openPlaylist()
         //     // }
         //     MenuItem {
         //         text: qsTr("Play from last known position")
@@ -231,7 +231,7 @@ Page {
         //             savedPosition
         //         }
         //         onClicked: {
-        //             if (mediaPlayer.playbackState != MediaPlayer.PlayingState) videoPoster.play();
+        //             if (mediaPlayer.playbackState != MediaPlayer.PlayingState) videoPoster.play()
         //             mediaPlayer.seek(savePositionMsec)
         //         }
         //     }
@@ -342,8 +342,8 @@ Page {
                 source: streamUrl
 
                 onSourceChanged: {
-                    position = 0;
-                    player.seek(0);
+                    position = 0
+                    player.seek(0)
                     //console.debug("Source changed to " + source)
                 }
 
@@ -362,7 +362,7 @@ Page {
                     mprisPlayer.title = streamTitle
 
                     if (enableSubtitles) {
-                        subTitleLoader.item.getSubtitles(subtitleUrl);
+                        subTitleLoader.item.getSubtitles(subtitleUrl)
                     }
 
                     if (mediaPlayer.hasAudio === true &&
@@ -373,13 +373,13 @@ Page {
 
                 // onNextClicked: {
                 //     if (isPlaylist && mainWindow.modelPlaylist.isNext()) {
-                //         next();
+                //         next()
                 //     }
                 // }
                 //
                 // onPrevClicked: {
                 //     if (isPlaylist && mainWindow.modelPlaylist.isPrev()) {
-                //         prev();
+                //         prev()
                 //     }
                 // }
 
@@ -406,10 +406,10 @@ Page {
                 }
 
                 function pause() {
-                    mediaPlayer.pause();
-                    if (controls.opacity === 0.0) toggleControls();
-//                    progressCircle.enabled = false;
-                    if (! mediaPlayer.seekable) mediaPlayer.stop();
+                    mediaPlayer.pause()
+                    if (controls.opacity === 0.0) toggleControls()
+//                    progressCircle.enabled = false
+                    if (! mediaPlayer.seekable) mediaPlayer.stop()
                     onlyMusic.playing = false
                 }
 
@@ -417,15 +417,15 @@ Page {
                 //     // reset
                 //     dataContainer.streamUrl = ""
                 //     dataContainer.streamTitle = ""
-                //     videoPoster.player.stop();
+                //     videoPoster.player.stop()
                 //     // before load new
                 //     var nextMedia = mainWindow.modelPlaylist.next()
                 //     dataContainer.streamUrl = nextMedia[0]
                 //     dataContainer.streamTitle = nextMedia[1]
                 //     mediaPlayer.source = streamUrl
-                //     videoPauseTrigger();
-                //     mediaPlayer.play();
-                //     hideControls();
+                //     videoPauseTrigger()
+                //     mediaPlayer.play()
+                //     hideControls()
                 //     mprisPlayer.title = streamTitle
                 // }
 
@@ -433,15 +433,15 @@ Page {
                 //     // reset
                 //     dataContainer.streamUrl = ""
                 //     dataContainer.streamTitle = ""
-                //     videoPoster.player.stop();
+                //     videoPoster.player.stop()
                 //     // before load new
                 //     var prevMedia = mainWindow.modelPlaylist.prev()
                 //     dataContainer.streamUrl = prevMedia[0]
                 //     dataContainer.streamTitle = prevMedia[1]
                 //     mediaPlayer.source = streamUrl
-                //     videoPauseTrigger();
-                //     mediaPlayer.play();
-                //     hideControls();
+                //     videoPauseTrigger()
+                //     mediaPlayer.play()
+                //     hideControls()
                 //     mprisPlayer.title = streamTitle
                 // }
 
@@ -556,8 +556,8 @@ Page {
             transformOrigin: Item.Center
 
             function checkScaleStatus() {
-                if ((root.width/root.height) > sourceRect.width/sourceRect.height) allowScaling = true;
-                console.log(root.width/root.height + " - " + sourceRect.width/sourceRect.height);
+                if ((root.width/root.height) > sourceRect.width/sourceRect.height) allowScaling = true
+                console.log(root.width/root.height + " - " + sourceRect.width/sourceRect.height)
             }
 
             onFillModeChanged: {
@@ -587,7 +587,7 @@ Page {
                     }
                 }
                 onDurationChanged: {
-                    //console.debug("Duration(msec): " + duration);
+                    //console.debug("Duration(msec): " + duration)
                     videoPoster.duration = (duration/1000)
 
                     if (hasAudio === true && hasVideo === false) {
@@ -673,7 +673,7 @@ Page {
     }
 
     Keys.onPressed: {
-        if (event.key === Qt.Key_Space) videoPauseTrigger();
+        if (event.key === Qt.Key_Space) videoPauseTrigger()
         if (event.key === Qt.Key_Left && mediaPlayer.seekable) {
             mediaPlayer.seek(mediaPlayer.position - 5000)
         }
@@ -686,25 +686,25 @@ Page {
         id: mprisPlayer
 
         onPauseRequested: {
-            videoPoster.pause();
+            videoPoster.pause()
         }
         onPlayRequested: {
-            videoPoster.play();
+            videoPoster.play()
         }
         onPlayPauseRequested: {
-            root.videoPauseTrigger();
+            root.videoPauseTrigger()
         }
         onStopRequested: {
-            videoPoster.player.stop();
+            videoPoster.player.stop()
         }
         // onNextRequested: {
-        //     videoPoster.next();
+        //     videoPoster.next()
         // }
         // onPreviousRequested: {
-        //     videoPoster.prev();
+        //     videoPoster.prev()
         // }
         onSeekRequested: {
-            mediaPlayer.seek(offset);
+            mediaPlayer.seek(offset)
         }
     }
 }

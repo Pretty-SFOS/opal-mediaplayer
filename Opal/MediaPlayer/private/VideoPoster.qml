@@ -125,7 +125,12 @@ MouseArea {
 
         z: 1000
         opacity: 0.0  // start hidden
-        Behavior on opacity { FadeAnimation { duration: 80; id: controlFade } }
+        Behavior on opacity {
+            FadeAnimation {
+                id: controlFade
+                duration: 80
+            }
+        }
         visible: opacity > 0.0
 
         function forward(seconds) {
@@ -213,7 +218,12 @@ MouseArea {
 
 
         SilicaControl {
-            anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
+            anchors {
+                left: parent.left
+                right: parent.right
+                bottom: parent.bottom
+            }
+
             visible: controls.opacity > 0
             enabled: visible
             opacity: controls.opacity
@@ -225,8 +235,14 @@ MouseArea {
                 anchors.fill: parent
 
                 gradient: Gradient {
-                    GradientStop { position: 0.0; color: "transparent" }
-                    GradientStop { position: 1.0; color: "black" } // black seems to look and work best
+                    GradientStop {
+                        position: 0.0
+                        color: "transparent"
+                    }
+                    GradientStop {
+                        position: 1.0
+                        color: "black"
+                    } // black seems to look and work best
                 }
             }
 
@@ -243,7 +259,7 @@ MouseArea {
                 height: width
                 visible: allowScaling
                 onClicked: {
-                    toggleAspectRatio();
+                    toggleAspectRatio()
                 }
             }
 
