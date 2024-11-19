@@ -100,22 +100,22 @@
         <translation>Reproducir una vez</translation>
     </message>
     <message>
-        <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="113"/>
+        <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="118"/>
         <source>Select from file system</source>
         <translation>Elija entre el sistema de archivos</translation>
     </message>
     <message>
-        <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="123"/>
+        <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="128"/>
         <source>No files ready</source>
         <translation>No hay archivos listos</translation>
     </message>
     <message>
-        <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="126"/>
+        <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="131"/>
         <source>Copy subtitle files in the SRT format next to the video file to open them quickly.</source>
         <translation>Copie los archivos de subtítulos en formato SRT junto al archivo de video para abrirlos rápidamente.</translation>
     </message>
     <message>
-        <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="130"/>
+        <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="135"/>
         <source>Pull down to pick a file.</source>
         <translation>Desplácese hacia abajo para seleccionar un archivo.</translation>
     </message>

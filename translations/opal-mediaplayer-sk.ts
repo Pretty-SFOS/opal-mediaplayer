@@ -100,22 +100,22 @@
         <translation>Hrať raz</translation>
     </message>
     <message>
-        <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="113"/>
+        <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="118"/>
         <source>Select from file system</source>
         <translation>Vyberte si z súborového systému</translation>
     </message>
     <message>
-        <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="123"/>
+        <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="128"/>
         <source>No files ready</source>
         <translation>Žiadne súbory pripravené</translation>
     </message>
     <message>
-        <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="126"/>
+        <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="131"/>
         <source>Copy subtitle files in the SRT format next to the video file to open them quickly.</source>
         <translation>Kopírovať titulky súborov v formáte SRT vedľa video súboru, aby ich rýchlo otvoril.</translation>
     </message>
     <message>
-        <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="130"/>
+        <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="135"/>
         <source>Pull down to pick a file.</source>
         <translation>Vytiahnite si súbor.</translation>
     </message>
