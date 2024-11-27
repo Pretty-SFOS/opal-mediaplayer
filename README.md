@@ -13,8 +13,8 @@ This module provides a media player page with support for subtitles.
 ## Status
 
 The module is already usable but the code is still extremely messy and undocumented.
-However, the module is based on Leszek Lesner's [video player for SailfishOS](https://github.com/llelectronics/videoPlayer)
-which is quite mature.
+However, as the module is based on Leszek Lesner's [video player for SailfishOS](https://github.com/llelectronics/videoPlayer)
+it can be considered quite mature.
 
 
 ## Usage
@@ -39,6 +39,21 @@ Then call this from somewhere in your app:
 ```{qml}
 pageStack.push("MyVideoPlayer.qml")
 ```
+
+## Permissions
+
+Some permissions are required for this module to work in Sailjail. This only
+affects apps intended for the Harbour store that show local video files.
+
+Add this to your `harbour-my-app.desktop` file:
+
+```{ini}
+[X-Sailjail]
+Permissions=Videos;MediaIndexing
+```
+
+See [here](https://github.com/sailfishos/sailjail-permissions#permissions) for
+a list of all Sailjail permissions.
 
 ## Screenshots
 
