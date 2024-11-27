@@ -7,117 +7,117 @@
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="26"/>
         <source>Playback failed</source>
         <comment>error info page heading</comment>
-        <translation type="unfinished"></translation>
+        <translation>Riproduzione fallita</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="30"/>
         <source>Resource error</source>
         <comment>error info page heading</comment>
-        <translation type="unfinished"></translation>
+        <translation>Errore contenuto</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="32"/>
         <source>Format error</source>
         <comment>error info page heading</comment>
-        <translation type="unfinished"></translation>
+        <translation>Errore formato</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="34"/>
         <source>Network error</source>
         <comment>error info page heading</comment>
-        <translation type="unfinished"></translation>
+        <translation>Errore di rete</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="36"/>
         <source>Access denied</source>
         <comment>error info page heading</comment>
-        <translation type="unfinished"></translation>
+        <translation>Accesso negato</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="38"/>
         <source>Media service missing</source>
         <comment>error info page heading</comment>
-        <translation type="unfinished"></translation>
+        <translation>Servizio media mancante</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="42"/>
         <source>The video cannot be played due to a problem allocating resources.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il video non può essere riprodotto per un problema nell&apos;allocare le risorse.</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="45"/>
         <source>The audio and or video format is not supported.</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;audio e/o il video non sono supportati.</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="48"/>
         <source>The video cannot be played due to network issues.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il video non può essere riprodotto per errori di rete.</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="51"/>
         <source>The video cannot be played due to insufficient permissions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il video non può essere riprodotto per permessi insufficienti.</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="54"/>
         <source>The video cannot be played because the media service could not be instantiated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il video non può essere riprodotto perché il servizio media non può essere inizializzato.</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="57"/>
         <source>Playback failed due to an expected error. Please restart the app and try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Riproduzione fallita a causa di un errore inaspettato. Per favore riavvia l&apos;app e prova di nuovo.</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="208"/>
         <source>Clear subtitles</source>
-        <translation type="unfinished"></translation>
+        <translation>Togli sottotitoli</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="212"/>
         <source>Load subtitles</source>
-        <translation type="unfinished"></translation>
+        <translation>Carica sottotitoli</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="663"/>
         <source>Zoomed to fit screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingrandito per adattarsi allo schermo</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="664"/>
         <source>Original</source>
-        <translation type="unfinished"></translation>
+        <translation>Originale</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="671"/>
         <source>Play on repeat</source>
-        <translation type="unfinished"></translation>
+        <translation>Ripeti</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="672"/>
         <source>Play once</source>
-        <translation type="unfinished"></translation>
+        <translation>Riproduci una volta sola</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="118"/>
         <source>Select from file system</source>
-        <translation type="unfinished"></translation>
+        <translation>Scegli dal file system</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="128"/>
         <source>No files ready</source>
-        <translation type="unfinished"></translation>
+        <translation>Nessun file pronto</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="131"/>
         <source>Copy subtitle files in the SRT format next to the video file to open them quickly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Copia il file dei sottotitoli nel formato SRT vicino al video per poterli aprire velocemente.</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="135"/>
         <source>Pull down to pick a file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Trascina in basso per scegliere un file.</translation>
     </message>
 </context>
 </TS>
