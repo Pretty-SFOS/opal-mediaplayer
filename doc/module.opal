@@ -55,6 +55,11 @@ mainLicenseSpdx: GPL-3.0-or-later
 # extraGalleryPages: none
 extraGalleryPages: ViewVideoPage.qml
 
+# colon-separated list of other Opal modules that this module depends on
+# Use the unstyled name without "opal-" prefix, as in the "name:" metadata field,
+# or set this field to "none" if there are no dependencies.
+dependencies: none
+
 # where the module's sources are located
 # This url will be automatically generated from the default repository url and
 # this module's name as specified above.
