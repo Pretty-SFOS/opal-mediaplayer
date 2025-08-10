@@ -5,6 +5,12 @@ SPDX-License-Identifier: GFDL-1.3-or-later
 
 # Changelog
 
+## 1.0.7 (2025-08-10)
+
+- Updated translations with contents from apps using this module.
+  I tried my best to always keep the most up-to-date version of all strings.
+  Hopefully nothing was overwritten - I apologize for any lost work!
+
 ## 1.0.6 (2025-08-09)
 
 - Added translations: Arabic, Persian
