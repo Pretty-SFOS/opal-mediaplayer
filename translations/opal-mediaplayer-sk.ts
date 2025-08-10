@@ -7,13 +7,13 @@
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="26"/>
         <source>Playback failed</source>
         <comment>error info page heading</comment>
-        <translation>Playback zlyhal</translation>
+        <translation>Prehrávanie zlyhalo</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="30"/>
         <source>Resource error</source>
         <comment>error info page heading</comment>
-        <translation>Chyba zdrojov</translation>
+        <translation>Chyba zdroja</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="32"/>
@@ -37,42 +37,42 @@
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="38"/>
         <source>Media service missing</source>
         <comment>error info page heading</comment>
-        <translation>Chýbajúce služby médií</translation>
+        <translation>Chýba mediálna služba</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="42"/>
         <source>The video cannot be played due to a problem allocating resources.</source>
-        <translation>Video nie je možné prehrávať z dôvodu problémových zdrojov.</translation>
+        <translation>Video nemožno prehrať kvôli problému s umiestnením zdroja.</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="45"/>
         <source>The audio and or video format is not supported.</source>
-        <translation>Audio a alebo video formát nie je podporovaný.</translation>
+        <translation>Formát zvuku a videa nie je podporovaný.</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="48"/>
         <source>The video cannot be played due to network issues.</source>
-        <translation>Video nemožno hrať kvôli problémom siete.</translation>
+        <translation>Video nemožno prehrať kvôli chybe v sieti.</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="51"/>
         <source>The video cannot be played due to insufficient permissions.</source>
-        <translation>Video nemožno hrať kvôli nedostatočným povoleniam.</translation>
+        <translation>Video nemožno prehrať kvôli nedostatočným oprávneniam.</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="54"/>
         <source>The video cannot be played because the media service could not be instantiated.</source>
-        <translation>Video nie je možné hrať, pretože mediálna služba nemôže byť okamžité.</translation>
+        <translation>Video sa nedá prehrať, pretože sa nepodarilo vytvoriť inštanciu mediálnej služby.</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="57"/>
         <source>Playback failed due to an expected error. Please restart the app and try again.</source>
-        <translation>Playback zlyhal kvôli očakávanej chybe. Prosím reštartujte aplikáciu a skúste to znova.</translation>
+        <translation>Prehrávanie zlyhalo kvôli neočakávanej chybe. Reštartujte aplikáciu a skúste znova.</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="208"/>
         <source>Clear subtitles</source>
-        <translation>Jasné titulky</translation>
+        <translation>Priehľadné titulky</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="212"/>
@@ -82,42 +82,42 @@
     <message>
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="663"/>
         <source>Zoomed to fit screen</source>
-        <translation>Priblížené na fit displej</translation>
+        <translation>Priblíženie prispôsobené obrazovke</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="664"/>
         <source>Original</source>
-        <translation>Originál</translation>
+        <translation>Pôvodné</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="671"/>
         <source>Play on repeat</source>
-        <translation>Hrať na opak</translation>
+        <translation>Prehrávať opakovane</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="672"/>
         <source>Play once</source>
-        <translation>Hrať raz</translation>
+        <translation>Prehrať raz</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="118"/>
         <source>Select from file system</source>
-        <translation>Vyberte si z súborového systému</translation>
+        <translation>Vybrať zo súborového systému</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="128"/>
         <source>No files ready</source>
-        <translation>Žiadne súbory pripravené</translation>
+        <translation>Žiadne súbory</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="131"/>
         <source>Copy subtitle files in the SRT format next to the video file to open them quickly.</source>
-        <translation>Kopírovať titulky súborov v formáte SRT vedľa video súboru, aby ich rýchlo otvoril.</translation>
+        <translation>Skopírovať súbory s titulkami vo formáte SRT z video súborom, aby sa rýchlo otvorili.</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="135"/>
         <source>Pull down to pick a file.</source>
-        <translation>Vytiahnite si súbor.</translation>
+        <translation>Potiahnuť nadol a vybrať súbor.</translation>
     </message>
 </context>
 </TS>

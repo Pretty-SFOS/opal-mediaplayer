@@ -37,7 +37,7 @@
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="38"/>
         <source>Media service missing</source>
         <comment>error info page heading</comment>
-        <translation>Serviço de mídia ausente</translation>
+        <translation>Serviço de média ausente</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="42"/>
@@ -62,12 +62,12 @@
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="54"/>
         <source>The video cannot be played because the media service could not be instantiated.</source>
-        <translation>O vídeo não pode ser reproduzido porque o serviço de mídia não pôde ser instanciado.</translation>
+        <translation>O vídeo não pode ser reproduzido porque o serviço de média não pôde ser instanciado.</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="57"/>
         <source>Playback failed due to an expected error. Please restart the app and try again.</source>
-        <translation>A reprodução falhou devido a um erro inesperado. Por favor, reinicie o aplicativo e tente novamente.</translation>
+        <translation>A reprodução falhou devido a um erro inesperado. Por favor, reinicie a app e tente novamente.</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="208"/>
@@ -82,7 +82,7 @@
     <message>
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="663"/>
         <source>Zoomed to fit screen</source>
-        <translation>Zoom ajustado para caber na tela</translation>
+        <translation>Zoom ajustado para caber no ecrã</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="664"/>
@@ -102,7 +102,7 @@
     <message>
         <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="118"/>
         <source>Select from file system</source>
-        <translation>Selecionar do sistema de arquivos</translation>
+        <translation>Selecionar do sistema de ficheiros</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="128"/>
@@ -112,12 +112,12 @@
     <message>
         <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="131"/>
         <source>Copy subtitle files in the SRT format next to the video file to open them quickly.</source>
-        <translation>Copie os arquivos de legenda no formato SRT ao lado do arquivo de vídeo para abri-los rapidamente.</translation>
+        <translation>Copie os ficheiros de legenda no formato SRT ao lado do ficheiro de vídeo para abri-los rapidamente.</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="135"/>
         <source>Pull down to pick a file.</source>
-        <translation>Puxe para baixo para escolher um arquivo.</translation>
+        <translation>Puxe para baixo para escolher um ficheiro.</translation>
     </message>
 </context>
 </TS>

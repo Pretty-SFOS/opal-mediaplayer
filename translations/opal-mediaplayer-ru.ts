@@ -7,7 +7,7 @@
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="26"/>
         <source>Playback failed</source>
         <comment>error info page heading</comment>
-        <translation>Проигрывание завершилось неудачей</translation>
+        <translation>Проигрывание не удалось</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="30"/>
@@ -42,7 +42,7 @@
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="42"/>
         <source>The video cannot be played due to a problem allocating resources.</source>
-        <translation>Видео не может быть проиграно из-за проблемы с распределением ресурсов.</translation>
+        <translation>Видео не может быть проиграно из-за проблемы распределения ресурсов.</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="45"/>
@@ -52,7 +52,7 @@
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="48"/>
         <source>The video cannot be played due to network issues.</source>
-        <translation>Видео не может быть проиграно из-за ошибок сети.</translation>
+        <translation>Видео не может быть проиграно из-за проблем с сетью.</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="51"/>
@@ -82,7 +82,7 @@
     <message>
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="663"/>
         <source>Zoomed to fit screen</source>
-        <translation>Увеличено до размеров экрана</translation>
+        <translation>Увеличено до размера экрана</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="664"/>

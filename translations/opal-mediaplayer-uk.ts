@@ -37,7 +37,7 @@
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="38"/>
         <source>Media service missing</source>
         <comment>error info page heading</comment>
-        <translation>Відсутній медіа-сервіс</translation>
+        <translation>Відсутня медіа-послуга</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="42"/>
@@ -62,7 +62,7 @@
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="54"/>
         <source>The video cannot be played because the media service could not be instantiated.</source>
-        <translation>Відео не може бути відтворено, оскільки медіа-сервіс не може бути інстанційованим.</translation>
+        <translation>Відео не може бути відтворено, оскільки медіа-послуга не може бути інстанційованим.</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="57"/>
@@ -72,12 +72,12 @@
     <message>
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="208"/>
         <source>Clear subtitles</source>
-        <translation type="unfinished"></translation>
+        <translation>Прибрати субтитри</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="212"/>
         <source>Load subtitles</source>
-        <translation type="unfinished"></translation>
+        <translation>Завантажити субтитри</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="663"/>
@@ -102,22 +102,22 @@
     <message>
         <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="118"/>
         <source>Select from file system</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибір з файлової системи</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="128"/>
         <source>No files ready</source>
-        <translation type="unfinished"></translation>
+        <translation>Немає готових файлів</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="131"/>
         <source>Copy subtitle files in the SRT format next to the video file to open them quickly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Скопіюйте файли субтитрів у форматі SRT поруч із відеофайлом, щоб швидко відкрити їх.</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="135"/>
         <source>Pull down to pick a file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Потягніть вниз, щоб вибрати файл.</translation>
     </message>
 </context>
 </TS>

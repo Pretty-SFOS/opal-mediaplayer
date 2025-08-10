@@ -13,7 +13,7 @@
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="30"/>
         <source>Resource error</source>
         <comment>error info page heading</comment>
-        <translation>Errore contenuto</translation>
+        <translation>Errore risorsa</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="32"/>
@@ -42,17 +42,17 @@
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="42"/>
         <source>The video cannot be played due to a problem allocating resources.</source>
-        <translation>Il video non può essere riprodotto per un problema nell&apos;allocare le risorse.</translation>
+        <translation>Il video non può essere riprodotto per un problema nell&apos;allocazione delle risorse.</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="45"/>
         <source>The audio and or video format is not supported.</source>
-        <translation>L&apos;audio e/o il video non sono supportati.</translation>
+        <translation>Il formato audio e/o video non sono supportati.</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="48"/>
         <source>The video cannot be played due to network issues.</source>
-        <translation>Il video non può essere riprodotto per errori di rete.</translation>
+        <translation>Il video non può essere riprodotto a causa di errori di rete.</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="51"/>
@@ -72,7 +72,7 @@
     <message>
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="208"/>
         <source>Clear subtitles</source>
-        <translation>Togli sottotitoli</translation>
+        <translation>Disabilita sottotitoli</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="212"/>
@@ -82,7 +82,7 @@
     <message>
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="663"/>
         <source>Zoomed to fit screen</source>
-        <translation>Ingrandito per adattarsi allo schermo</translation>
+        <translation>Allargato per adattarsi allo schermo</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="664"/>
@@ -112,7 +112,7 @@
     <message>
         <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="131"/>
         <source>Copy subtitle files in the SRT format next to the video file to open them quickly.</source>
-        <translation>Copia il file dei sottotitoli nel formato SRT vicino al video per poterli aprire velocemente.</translation>
+        <translation>Copia il file dei sottotitoli nel formato SRT vicino al video per aprirli rapidamente.</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="135"/>

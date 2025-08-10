@@ -7,7 +7,7 @@
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="26"/>
         <source>Playback failed</source>
         <comment>error info page heading</comment>
-        <translation>Oynatma başarısız</translation>
+        <translation>Yeniden oynatılamadı</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="30"/>
@@ -62,12 +62,12 @@
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="54"/>
         <source>The video cannot be played because the media service could not be instantiated.</source>
-        <translation>Medya servisi başlatılamadığından bu video oynatılamaz.</translation>
+        <translation>Bu video medya servisi başlatılamadığı için oynatılamaz.</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="57"/>
         <source>Playback failed due to an expected error. Please restart the app and try again.</source>
-        <translation>Oynatma beklenmedik bir hatadan dolayı başarısız. Lütfen uygulamayı yeniden açıp tekrar deneyin.</translation>
+        <translation>Beklenmedik bir hata nedeniyle yeniden oynatma başarısız. Lütfen uygulamayı yeniden açıp tekrar deneyin.</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="208"/>
@@ -107,7 +107,7 @@
     <message>
         <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="128"/>
         <source>No files ready</source>
-        <translation>Hazır dosya yok</translation>
+        <translation>Hiçbir dosya hazır değil</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="131"/>
@@ -117,7 +117,7 @@
     <message>
         <location filename="../Opal/MediaPlayer/private/LoadSubtitlesDialog.qml" line="135"/>
         <source>Pull down to pick a file.</source>
-        <translation>Dosya seçmek için aşağı kaydırın.</translation>
+        <translation>Bir dosya seçmek için aşağı kaydırın.</translation>
     </message>
 </context>
 </TS>

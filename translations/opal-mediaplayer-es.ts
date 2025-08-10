@@ -7,13 +7,13 @@
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="26"/>
         <source>Playback failed</source>
         <comment>error info page heading</comment>
-        <translation>Reproducción fallida</translation>
+        <translation>Error en la reproducción</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="30"/>
         <source>Resource error</source>
         <comment>error info page heading</comment>
-        <translation>Error del recurso</translation>
+        <translation>Error en los recursos</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="32"/>
@@ -67,7 +67,7 @@
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="57"/>
         <source>Playback failed due to an expected error. Please restart the app and try again.</source>
-        <translation>La reproducción ha fallado debido a un error esperado. Por favor, reinicia la aplicación e inténtalo de nuevo.</translation>
+        <translation>La reproducción ha fallado debido a un error esperado. Reinicia la aplicación e inténtalo de nuevo.</translation>
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/VideoPlayerPage.qml" line="208"/>
