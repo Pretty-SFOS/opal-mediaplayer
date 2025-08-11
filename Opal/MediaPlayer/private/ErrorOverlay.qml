@@ -43,7 +43,7 @@ Loader {
                 "The video cannot be played due to a problem allocating resources.")
         } else if (error === MediaPlayer.FormatError) {
             details += qsTranslate("Opal.MediaPlayer",
-                "The audio and or video format is not supported.")
+                "The audio or video format is not supported.")
         } else if (error === MediaPlayer.NetworkError) {
             details += qsTranslate("Opal.MediaPlayer",
                 "The video cannot be played due to network issues.")

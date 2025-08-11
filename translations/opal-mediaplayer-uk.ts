@@ -46,7 +46,7 @@
     </message>
     <message>
         <location filename="../Opal/MediaPlayer/private/ErrorOverlay.qml" line="45"/>
-        <source>The audio and or video format is not supported.</source>
+        <source>The audio or video format is not supported.</source>
         <translation>Формат аудіо та/або відео не підтримується.</translation>
     </message>
     <message>
