@@ -5,6 +5,11 @@ SPDX-License-Identifier: GFDL-1.3-or-later
 
 # Changelog
 
+## 1.0.8 (2025-11-26)
+
+- Added translations: Bengali, Chinese (Traditional Han script), Hindi, Malayalam, Thai
+- Updated translations: Finnish, French
+
 ## 1.0.7 (2025-08-10)
 
 - Updated translations with contents from apps using this module.
