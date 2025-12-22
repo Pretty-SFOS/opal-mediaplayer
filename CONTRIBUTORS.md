@@ -1,5 +1,5 @@
 <!--
-SPDX-FileCopyrightText: 2023-2024 Mirian Margiani
+SPDX-FileCopyrightText: 2023-2025 Mirian Margiani
 SPDX-License-Identifier: GFDL-1.3-or-later
 -->
 
@@ -7,4 +7,5 @@ SPDX-License-Identifier: GFDL-1.3-or-later
 
 ## Programming
 
-- author: Mirian Margiani
+- module author: Mirian Margiani
+- original video player author: Leszek Lesner

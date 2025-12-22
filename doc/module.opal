@@ -32,7 +32,7 @@ description: This module provides a media player page with support for subtitles
 
 # attribution string for the whole module, in the same form as a SPDX
 # FileCopyrightText entry.
-attribution: 2024 Mirian Margiani:2013-2020 Leszek Lesner
+attribution: 2024-2025 Mirian Margiani:2013-2020 Leszek Lesner
 
 # colon-separated list of this module's current maintainer(s)
 maintainers: Mirian Margiani
