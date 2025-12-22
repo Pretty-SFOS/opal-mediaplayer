@@ -5,6 +5,12 @@ SPDX-License-Identifier: GFDL-1.3-or-later
 
 # Changelog
 
+## 1.0.9 (2025-12-22)
+
+- Updated packaging to make it easier to integrate this module in apps
+- Fixed translations file names to be the same across all modules
+- Fixed missing attribution to the original author of the video player
+
 ## 1.0.8 (2025-11-26)
 
 - Added translations: Bengali, Chinese (Traditional Han script), Hindi, Malayalam, Thai
